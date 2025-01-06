@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QH9DlhDmiXPV0kNX6Djn0Oo7tOfP3lRI7nssEN1bWHA5DluPM9W5VmtE21VHw6qXlqm65g5pb3fLLhKDWPRRIg==",
+  "dgSpecHash": "c3Qrwme+Pcch03wmE7qf8ptknmKxhrFdickN8uOupeS+4+YnmgAAmiH60OCck9KFAE+zpeVgBWE8CSphocMlCg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\fergl\\source\\repos\\Finanzas\\Finanzas\\Finanzas.csproj",
+  "projectFilePath": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Finanzas.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fergl\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\fergl\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

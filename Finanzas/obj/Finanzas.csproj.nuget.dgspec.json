@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\fergl\\source\\repos\\Finanzas\\Finanzas\\Finanzas.csproj": {}
+    "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Finanzas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\fergl\\source\\repos\\Finanzas\\Finanzas\\Finanzas.csproj": {
+    "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Finanzas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\fergl\\source\\repos\\Finanzas\\Finanzas\\Finanzas.csproj",
+        "projectUniqueName": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Finanzas.csproj",
         "projectName": "Finanzas",
-        "projectPath": "C:\\Users\\fergl\\source\\repos\\Finanzas\\Finanzas\\Finanzas.csproj",
+        "projectPath": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Finanzas.csproj",
         "packagesPath": "C:\\Users\\fergl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\fergl\\source\\repos\\Finanzas\\Finanzas\\obj\\",
+        "outputPath": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

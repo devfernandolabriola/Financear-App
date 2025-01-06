@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Finanzas.Models.Usuario
+
+
+@using (Html.BeginForm("Login","UsuarioController",FormMethod.Get))
+{
+    @Html.Label("Ingrese Correo")
+    @Html.TextBoxFor(Usuario => Usuario.Email)
+
+    @Html.Label("Ingrese Contraseña")
+    @Html.TextBoxFor(Usuario => Usuario.Clave)
+    <input type="submit" />
+}
