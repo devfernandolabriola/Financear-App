@@ -16,4 +16,19 @@ public partial class Usuario
     public virtual ICollection<Cuenta> Cuenta { get; set; } = new List<Cuenta>();
 
     public virtual ICollection<CuentasPorUsuario> CuentasPorUsuarios { get; set; } = new List<CuentasPorUsuario>();
+
+    public Usuario() { 
+   
+    }
+    public Usuario(string email, string nombre, string clave)
+    {
+        Email = email;
+        Nombre = nombre;
+        Clave = clave;
+    }
+
+    public void RegisterUser(string email, string nombre, string clave)
+    {
+        
+    }
 }
