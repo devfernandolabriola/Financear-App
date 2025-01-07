@@ -13,17 +13,22 @@ namespace Finanzas.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         public IActionResult Login()
         {
             return View();
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult SignUp()
         {
             return View();
         }

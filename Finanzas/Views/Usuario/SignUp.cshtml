@@ -1,0 +1,14 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Finanzas.Models.Usuario
+
+@using (Html.BeginForm("Register", "Usuario", FormMethod.Post)) {
+    @Html.TextBoxFor(u => u.Email, new { @placeholder = "Email" })
+    @Html.TextBoxFor(u => u.Nombre, new { @placeholder = "Nombre" })
+    @Html.PasswordFor(u => u.Clave, new { @placeholder = "Clave" })
+
+    <input type="submit" name="SignUpButton" value="SignUp" />
+}

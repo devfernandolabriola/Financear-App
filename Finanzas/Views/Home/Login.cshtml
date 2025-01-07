@@ -3,13 +3,10 @@
 *@
 @model Finanzas.Models.Usuario
 
-
-@using (Html.BeginForm("Login","UsuarioController",FormMethod.Get))
-{
-    @Html.Label("Ingrese Correo")
-    @Html.TextBoxFor(Usuario => Usuario.Email)
-
-    @Html.Label("Ingrese Contraseña")
-    @Html.TextBoxFor(Usuario => Usuario.Clave)
-    <input type="submit" />
+@using(Html.BeginForm("Login","UsuarioController", FormMethod.Get)) {
+    @Html.Label("Ingresa tu correo inmundo")
+    @Html.TextBoxFor(user => user.Email)
+    @Html.Label("Ingrese clave, asqueroso")
+    @Html.TextBoxFor(user => user.Clave)
+    <input type="submit" value="Ingresar"/>
 }

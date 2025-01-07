@@ -3,16 +3,28 @@
   "WorkspaceRootPath": "D:\\Proyecto con nearsito 2\\Finanzas\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|d:\\proyecto con nearsito 2\\finanzas\\finanzas\\views\\home\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|solutionrelative:finanzas\\views\\home\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|d:\\proyecto con nearsito 2\\finanzas\\finanzas\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|solutionrelative:finanzas\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|d:\\proyecto con nearsito 2\\finanzas\\finanzas\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|solutionrelative:finanzas\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|d:\\proyecto con nearsito 2\\finanzas\\finanzas\\models\\context\\finanzasappcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|solutionrelative:finanzas\\models\\context\\finanzasappcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|d:\\proyecto con nearsito 2\\finanzas\\finanzas\\views\\home\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|solutionrelative:finanzas\\views\\home\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|d:\\proyecto con nearsito 2\\finanzas\\finanzas\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|solutionrelative:finanzas\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|d:\\proyecto con nearsito 2\\finanzas\\finanzas\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|solutionrelative:finanzas\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|d:\\proyecto con nearsito 2\\finanzas\\finanzas\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -29,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|d:\\proyecto con nearsito 2\\finanzas\\finanzas\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|solutionrelative:finanzas\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|d:\\proyecto con nearsito 2\\finanzas\\finanzas\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6E6FCDC-463C-4D16-A3F2-A65078232799}|Finanzas\\Finanzas.csproj|solutionrelative:finanzas\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,37 +50,41 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 6,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Views\\Home\\Login.cshtml",
-              "RelativeDocumentMoniker": "Finanzas\\Views\\Home\\Login.cshtml",
-              "ToolTip": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Views\\Home\\Login.cshtml",
-              "RelativeToolTip": "Finanzas\\Views\\Home\\Login.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAABDAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-01-06T23:17:58.533Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "FinanzasAppContext.cs",
+              "DocumentMoniker": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Models\\Context\\FinanzasAppContext.cs",
+              "RelativeDocumentMoniker": "Finanzas\\Models\\Context\\FinanzasAppContext.cs",
+              "ToolTip": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Models\\Context\\FinanzasAppContext.cs",
+              "RelativeToolTip": "Finanzas\\Models\\Context\\FinanzasAppContext.cs",
+              "ViewState": "AQIAAHoAAAAAAAAAAAAswAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-07T22:30:13.806Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Finanzas\\Views\\Shared\\_Layout.cshtml",
               "ToolTip": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Finanzas\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAAABwAAACDAAAA",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAB0AAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-01-06T23:13:39.041Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "Privacy.cshtml",
               "DocumentMoniker": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Views\\Home\\Privacy.cshtml",
               "RelativeDocumentMoniker": "Finanzas\\Views\\Home\\Privacy.cshtml",
@@ -80,12 +92,11 @@
               "RelativeToolTip": "Finanzas\\Views\\Home\\Privacy.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-01-06T23:13:17.314Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-06T23:13:17.314Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "Finanzas\\Views\\_ViewImports.cshtml",
@@ -93,8 +104,7 @@
               "RelativeToolTip": "Finanzas\\Views\\_ViewImports.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-01-06T23:13:14.752Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-06T23:13:14.752Z"
             },
             {
               "$type": "Document",
@@ -104,20 +114,20 @@
               "RelativeDocumentMoniker": "Finanzas\\Controllers\\HomeController.cs",
               "ToolTip": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Controllers\\HomeController.cs",
               "RelativeToolTip": "Finanzas\\Controllers\\HomeController.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAA1wBYAAAAaAAAA",
+              "ViewState": "AQIAABMAAAAAAAAAAAAgwCAAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-06T23:12:15.48Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
               "Title": "Usuario.cs",
               "DocumentMoniker": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Models\\Usuario.cs",
               "RelativeDocumentMoniker": "Finanzas\\Models\\Usuario.cs",
               "ToolTip": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Models\\Usuario.cs",
               "RelativeToolTip": "Finanzas\\Models\\Usuario.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAxwAAAAAAAAAAA",
+              "ViewState": "AQIAABkAAAAAAAAAAAAcwCYAAABgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-06T23:09:36.311Z",
               "EditorCaption": ""
@@ -125,6 +135,31 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Views\\Home\\Login.cshtml",
+              "RelativeDocumentMoniker": "Finanzas\\Views\\Home\\Login.cshtml",
+              "ToolTip": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Views\\Home\\Login.cshtml",
+              "RelativeToolTip": "Finanzas\\Views\\Home\\Login.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAABFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-06T23:17:58.533Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UsuarioController.cs",
+              "DocumentMoniker": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Controllers\\UsuarioController.cs",
+              "RelativeDocumentMoniker": "Finanzas\\Controllers\\UsuarioController.cs",
+              "ToolTip": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Controllers\\UsuarioController.cs",
+              "RelativeToolTip": "Finanzas\\Controllers\\UsuarioController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-06T23:52:43.103Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Finanzas\\Views\\Home\\Index.cshtml",
@@ -132,12 +167,11 @@
               "RelativeToolTip": "Finanzas\\Views\\Home\\Index.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-01-06T23:08:28.24Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-06T23:08:28.24Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "D:\\Proyecto con nearsito 2\\Finanzas\\Finanzas\\Views\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "Finanzas\\Views\\_ViewStart.cshtml",
@@ -145,8 +179,7 @@
               "RelativeToolTip": "Finanzas\\Views\\_ViewStart.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-01-06T23:08:14.002Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-06T23:08:14.002Z"
             }
           ]
         }
