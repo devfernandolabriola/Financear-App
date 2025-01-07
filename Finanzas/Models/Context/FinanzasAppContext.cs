@@ -56,11 +56,6 @@ public partial class FinanzasAppContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("nombre");
-
-            entity.HasOne(d => d.IdCreadorNavigation).WithMany(p => p.Cuenta)
-                .HasForeignKey(d => d.IdCreador)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Cuentas_Creador_Id_FK");
         });
 
         modelBuilder.Entity<CuentasPorUsuario>(entity =>
@@ -85,11 +80,6 @@ public partial class FinanzasAppContext : DbContext
                 .HasForeignKey(d => d.IdMovimiento)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("CuentasPorUsuario_IdMovimiento_FK");
-
-            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.CuentasPorUsuarios)
-                .HasForeignKey(d => d.IdUsuario)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("CuentasPorUsuario_Usuario_Id_FK");
         });
 
         modelBuilder.Entity<Moneda>(entity =>
