@@ -2,9 +2,9 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Finanzas/bin/
+bin/
 /.vs
-/Finanzas/obj/
+obj/
 
 # User-specific files
 *.suo
