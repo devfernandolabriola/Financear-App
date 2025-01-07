@@ -2,22 +2,6 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Finanzas/bin/Debug/net8.0
+/Finanzas/bin/
 /.vs
-/Finanzas/obj/Debug/net8.0/staticwebassets
-/Finanzas/obj/Finanzas.csproj.nuget.dgspec.json
-/Finanzas/obj/Finanzas.csproj.nuget.g.props
-/Finanzas/obj/project.assets.json
-/Finanzas/obj/project.nuget.cache
-/Finanzas/obj/Debug/net8.0/apphost.exe
-/Finanzas/obj/Debug/net8.0/Finanzas.AssemblyInfo.cs
-/Finanzas/obj/Debug/net8.0/Finanzas.AssemblyInfoInputs.cache
-/Finanzas/obj/Debug/net8.0/Finanzas.assets.cache
-/Finanzas/obj/Debug/net8.0/Finanzas.csproj.AssemblyReference.cache
-/Finanzas/obj/Debug/net8.0/Finanzas.GeneratedMSBuildEditorConfig.editorconfig
-/Finanzas/obj/Debug/net8.0/Finanzas.sourcelink.json
-/Finanzas/obj/Debug/net8.0/staticwebassets.build.endpoints.json
-/Finanzas/obj/Debug/net8.0/staticwebassets.references.upToDateCheck.txt
-/Finanzas/obj/Debug/net8.0/staticwebassets.removed.txt
-/Finanzas/obj/Debug/net8.0/staticwebassets.upToDateCheck.txt
-/Finanzas/obj/Debug/net8.0/Finanzas.RazorAssemblyInfo.cs
+/Finanzas/obj/
