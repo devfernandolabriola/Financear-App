@@ -9,5 +9,4 @@ public partial class TipoMovimiento
 
     public string Nombre { get; set; } = null!;
 
-    public virtual ICollection<Movimiento> Movimientos { get; set; } = new List<Movimiento>();
 }

@@ -9,5 +9,4 @@ public partial class Moneda
 
     public string Nombre { get; set; } = null!;
 
-    public virtual ICollection<CuentasPorUsuario> CuentasPorUsuarios { get; set; } = new List<CuentasPorUsuario>();
 }
