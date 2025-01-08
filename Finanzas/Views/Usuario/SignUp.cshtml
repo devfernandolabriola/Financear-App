@@ -8,7 +8,7 @@
 @using (Html.BeginForm("Register", "Usuario", FormMethod.Post)) {
     @Html.TextBoxFor(u => u.Email, new { @placeholder = "Email" })
     @Html.TextBoxFor(u => u.Nombre, new { @placeholder = "Nombre" })
-    @Html.PasswordFor(u => u.Clave, new { @placeholder = "Clave" })
+    @Html.PasswordFor(u => u.Clave, new { @placeholder = "Clave", @minLength="8"})
 
     <input type="submit" name="SignUpButton" value="SignUp" />
 }

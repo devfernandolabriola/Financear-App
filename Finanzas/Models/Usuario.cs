@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Finanzas.Models.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Finanzas.Models;
 
@@ -20,8 +21,9 @@ public partial class Usuario
     public string Email { get; set; } = null!;
 
     [Required(ErrorMessage = "La clave es obligatoria.")]
+    [MinLength(8,ErrorMessage = "Minimo 8 caracteres capo")]
     public string Clave { get; set; } = null!;
-
+    
     public Usuario() { 
    
     }
@@ -36,8 +38,10 @@ public partial class Usuario
     {
         try
         {
+            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Usuarios ON"); //Esto para que no se rompa la base de datos.
             context.Usuarios.Add(new Usuario { Email = email, Nombre = nombre, Clave = clave });
             context.SaveChanges();
+            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Usuarios OFF");
             return true;
         }
         catch (Exception ex)

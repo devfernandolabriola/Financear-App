@@ -21,7 +21,8 @@ namespace Finanzas.Controllers
         [HttpPost]
         public ActionResult Register(string Email, string Nombre, string Clave )
         {
-            var success = Usuario.RegisterUser(_context, Email, Nombre, Clave);
+            var ClaveCifrada = HashHelper.HashPassword( Clave );
+            var success = Usuario.RegisterUser(_context, Email, Nombre, ClaveCifrada);
             if(success) return View("Success"); else return View("Fail");
         }
     }
