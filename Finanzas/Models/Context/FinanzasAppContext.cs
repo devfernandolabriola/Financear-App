@@ -65,21 +65,6 @@ public partial class FinanzasAppContext : DbContext
             entity.ToTable("CuentasPorUsuario");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-
-            entity.HasOne(d => d.IdCuentaNavigation).WithMany(p => p.CuentasPorUsuarios)
-                .HasForeignKey(d => d.IdCuenta)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("CuentasPorUsuario_Cuentas_Id_FK");
-
-            entity.HasOne(d => d.IdMonedaNavigation).WithMany(p => p.CuentasPorUsuarios)
-                .HasForeignKey(d => d.IdMoneda)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("CuentasPorUsuario_IdMoneda_FK");
-
-            entity.HasOne(d => d.IdMovimientoNavigation).WithMany(p => p.CuentasPorUsuarios)
-                .HasForeignKey(d => d.IdMovimiento)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("CuentasPorUsuario_IdMovimiento_FK");
         });
 
         modelBuilder.Entity<Moneda>(entity =>
@@ -100,16 +85,6 @@ public partial class FinanzasAppContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.Fecha).HasColumnType("datetime");
-
-            entity.HasOne(d => d.IdCategoriaNavigation).WithMany(p => p.Movimientos)
-                .HasForeignKey(d => d.IdCategoria)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Movimientos_IdCategoria_FK");
-
-            entity.HasOne(d => d.TipoMovimiento).WithMany(p => p.Movimientos)
-                .HasForeignKey(d => d.TipoMovimientoId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Movimientos_TipoMovimientoId_FK");
         });
 
         modelBuilder.Entity<TipoMovimiento>(entity =>
