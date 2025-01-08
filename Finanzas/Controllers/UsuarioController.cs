@@ -18,12 +18,27 @@ namespace Finanzas.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Register(string Email, string Nombre, string Clave )
+        public IActionResult Login()
         {
-            var ClaveCifrada = HashHelper.HashPassword( Clave );
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(string Email, string Nombre, string Clave)
+        {
+            var ClaveCifrada = HashHelper.HashPassword(Clave);
             var success = Usuario.RegisterUser(_context, Email, Nombre, ClaveCifrada);
-            if(success) return View("Success"); else return View("Fail");
+            if (success) return View("Success"); else return View("Fail");
+        }
+
+        [HttpGet]
+
+        public ActionResult IniciarSesion(string Email, string Clave) 
+        {
+            var User = Usuario.LoginUser(_context, Email, Clave);
+            var success = User!=null?true:false; //Validacion en una linea, si user es distinto de null da true, sino false.
+            if (success) return View("Success"); else return View("Fail");
+
         }
     }
 }

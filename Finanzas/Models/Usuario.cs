@@ -9,8 +9,7 @@ namespace Finanzas.Models;
 
 public partial class Usuario
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Configura el campo como autoincremental
+
     public int Id { get; set; }
 
     [Required(ErrorMessage = "El nombre es obligatorio.")]
@@ -38,15 +37,40 @@ public partial class Usuario
     {
         try
         {
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Usuarios ON"); //Esto para que no se rompa la base de datos.
-            context.Usuarios.Add(new Usuario { Email = email, Nombre = nombre, Clave = clave });
-            context.SaveChanges();
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Usuarios OFF");
+            context.Database.BeginTransaction();
+            context.Database.ExecuteSqlRaw($"Insert into Usuarios(Nombre, Email, Clave) VALUES('{nombre}', '{email}', '{clave}')");
+            context.Database.CommitTransaction();
             return true;
         }
         catch (Exception ex)
         {
+            context.Database.RollbackTransaction();
             return false;
         } 
+    }
+
+    public static Usuario? LoginUser(FinanzasAppContext context,string Email, string Clave)
+    {
+        var usuario = context.Usuarios.FirstOrDefault(x => x.Email == Email);
+        bool datosCorrectos = false;
+        if (usuario != null)
+        {
+            if (CompararClave(HashHelper.HashPassword(Clave), usuario.Clave))
+            {
+                datosCorrectos = true;
+                return usuario;
+            } else
+            {
+                return null;
+            }
+            
+        }
+        return usuario;
+
+    }
+
+    private static bool CompararClave(string ClaveForm, string ClaveDb)
+    {
+        return ClaveForm == ClaveDb;
     }
 }
