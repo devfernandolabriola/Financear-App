@@ -7,8 +7,27 @@
 
 @using (Html.BeginForm("Register", "Usuario", FormMethod.Post)) {
     @Html.TextBoxFor(u => u.Email, new { @placeholder = "Email" })
+    <p id="MensajeError"> El Correo Ya existe </p>
     @Html.TextBoxFor(u => u.Nombre, new { @placeholder = "Nombre" })
     @Html.PasswordFor(u => u.Clave, new { @placeholder = "Clave", @minLength="8"})
 
-    <input type="submit" name="SignUpButton" value="SignUp" />
+    <input onclick="envioData()" type="submit" name="SignUpButton" value="SignUp" />
 }
+<script>
+
+    function envioData() {
+        $.ajax({
+            url: "register",
+            method: "POST",
+            data: {email: Email},
+            dataType: "json",
+            error: function (respuesta) {
+                if (respuesta == StatusCode(422)) {
+                    $("MensajeError").show()
+                }
+            }
+
+        })
+    }
+
+</script>

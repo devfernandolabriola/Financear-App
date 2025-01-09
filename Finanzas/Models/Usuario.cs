@@ -35,6 +35,7 @@ public partial class Usuario
 
     public static bool RegisterUser(FinanzasAppContext context, string email, string nombre, string clave)
     {
+
         try
         {
             context.Database.BeginTransaction();
