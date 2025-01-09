@@ -10,8 +10,4 @@ public partial class Cuenta
     public string Nombre { get; set; } = null!;
 
     public int IdCreador { get; set; }
-
-    public virtual ICollection<CuentasPorUsuario> CuentasPorUsuarios { get; set; } = new List<CuentasPorUsuario>();
-
-    public virtual Usuario IdCreadorNavigation { get; set; } = null!;
 }
