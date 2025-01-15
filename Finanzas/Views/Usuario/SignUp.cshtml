@@ -1,33 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model Finanzas.Models.Usuario
+﻿@model Finanzas.Models.Usuario
 
-@using (Html.BeginForm("Register", "Usuario", FormMethod.Post)) {
-    @Html.TextBoxFor(u => u.Email, new { @placeholder = "Email" })
-    <p id="MensajeError"> El Correo Ya existe </p>
-    @Html.TextBoxFor(u => u.Nombre, new { @placeholder = "Nombre" })
-    @Html.PasswordFor(u => u.Clave, new { @placeholder = "Clave", @minLength="8"})
+@Html.TextBoxFor(u => u.Email, new { @id = "Email", @placeholder = "Email" })
+@Html.TextBoxFor(u => u.Nombre, new { @id = "Nombre", @placeholder = "Nombre" })
+@Html.PasswordFor(u => u.Clave, new { @id = "Clave", @placeholder = "Clave", @minLength = "8" })
+<p id="MensajeError" style="color: red; display:none;">El Correo o nombre ya existe, fijate capo</p>
 
-    <input onclick="envioData()" type="submit" name="SignUpButton" value="SignUp" />
-}
+<input type="button" onclick="register()" name="SignUpButton" id="SignUpButton" value="SignUp" />
+
 <script>
 
-    function envioData() {
+
+    function register() {
+        let email = $('#Email').val();
+        let nombre = $('#Nombre').val();
+        let clave = $('#Clave').val();
+        console.log(email);
+
         $.ajax({
-            url: "register",
+            url: '@Url.Action("Register", "Usuario")',
             method: "POST",
-            data: {email: Email},
+            data: JSON.stringify({ Email: email, Nombre: nombre, Clave: clave }),
+            contentType: "application/json",
             dataType: "json",
-            error: function (respuesta) {
-                if (respuesta == StatusCode(422)) {
-                    $("MensajeError").show()
-                }
+            error: function (xhr,s,p) {
+                console.log("entre por el amor de dios");
+                console.log(xhr, s, p);
+                document.getElementById("MensajeError").style.display = "inline";
             }
-
-        })
-    }
-
+        });
+    };
 </script>
