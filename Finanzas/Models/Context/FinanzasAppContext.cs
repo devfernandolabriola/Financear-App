@@ -25,8 +25,6 @@ public partial class FinanzasAppContext : DbContext
 
     public virtual DbSet<Movimiento> Movimientos { get; set; }
 
-    public virtual DbSet<TipoMovimiento> TipoMovimientos { get; set; }
-
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -87,18 +85,6 @@ public partial class FinanzasAppContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.Fecha).HasColumnType("datetime");
-        });
-
-        modelBuilder.Entity<TipoMovimiento>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__TipoMovi__3213E83FB6F3FCD0");
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
-            entity.Property(e => e.Nombre)
-                .HasMaxLength(100)
-                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Usuario>(entity =>

@@ -1,8 +1,42 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+}
+@if (ViewBag.IsUserLoggedIn != null && ViewBag.IsUserLoggedIn) {
+	if (ViewBag.TieneCuentas) {
+        <table>
+            <thead>
+                <tr>
+                    <th>IdMoneda</th>
+                    <th>MontoTotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    // Cast ViewBag data to List<(int IdMoneda, decimal MontoTotal)>
+                    var montos = (List<(int IdMoneda, decimal MontoTotal)>)ViewBag.MontosPorMoneda;
+
+                    foreach (var item in montos)
+                    {
+                        <tr>
+                            <td>@item.IdMoneda</td>
+                            <td>@item.MontoTotal</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+	} else {
+		<div class="text-center">
+			<h1 class="display-4">No tienes cuentas asociadas.</h1>
+			<p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+		</div>
+	}
+
+} else {
+	<div class="text-center">
+		<h1 class="display-4">Welcome</h1>
+		<p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+	</div>
+}
