@@ -53,12 +53,10 @@ public partial class Usuario
     public static Usuario? LoginUser(FinanzasAppContext context,string Email, string Clave)
     {
         var usuario = context.Usuarios.FirstOrDefault(x => x.Email == Email);
-        bool datosCorrectos = false;
         if (usuario != null)
         {
-            if (CompararClave(HashHelper.HashPassword(Clave), usuario.Clave))
+            if (HashHelper.HashPassword(Clave) == usuario.Clave)
             {
-                datosCorrectos = true;
                 return usuario;
             } else
             {
@@ -70,8 +68,24 @@ public partial class Usuario
 
     }
 
-    private static bool CompararClave(string ClaveForm, string ClaveDb)
+    public static int VerificarDatosRegister(FinanzasAppContext context, string Email, string nombre)
     {
-        return ClaveForm == ClaveDb;
+        if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(nombre))
+        {
+            return 400;
+        }
+        var usuario = context.Usuarios.FirstOrDefault(x => x.Email == Email || x.Nombre == nombre);
+        if (usuario != null)
+        {
+            return 422;
+        }
+        return 200;
     }
+
+    public static string DevuelvoMontoTotal(FinanzasAppContext context, int IdUsuario)
+    {
+        //TODO: CONTINUAR LOGICA
+        var cuentasUsuario = context.CuentasPorUsuarios.Where(x => x.IdUsuario == IdUsuario);
+        return string.Empty;
+    } 
 }

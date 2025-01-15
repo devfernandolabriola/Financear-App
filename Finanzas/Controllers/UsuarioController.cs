@@ -27,40 +27,40 @@ namespace Finanzas.Controllers
             return View();
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
+        }
+
         [HttpPost]
         [Route("register")]
         public IActionResult Register([FromBody] UsuarioDTO userDTO/*string Email*//*, string Nombre, string Clave*/)
         {
-            var resultado = VerificarDatosRegister(userDTO.Email, userDTO.Nombre);
-            if (resultado == 422)
+            try
             {
-                return Unauthorized("Feo");
+                var resultado = Usuario.VerificarDatosRegister(_context, userDTO.Email, userDTO.Nombre);
+                if (resultado == 422 || resultado == 400)
+                {
+                    return Unauthorized("Feo");
+                }
+                var ClaveCifrada = HashHelper.HashPassword(userDTO.Clave);
+                var success = Usuario.RegisterUser(_context, userDTO.Email, userDTO.Nombre, ClaveCifrada);
+                //if (success) return View("Success"); else return View("Fail");
+                if (success)
+                {
+                    var datoUsuario = _context.Usuarios.First(x => x.Email == userDTO.Email);
+                    SetearContext(datoUsuario.Id, datoUsuario.Nombre);
+                    //return Json(new { success = true, redirect = Url.Action("Index", "Home", new { id = datoUsuario.Id }) });
+                    return Ok(new { message = "Ok" });
+                };
+            } catch( Exception e)
+            {
+                return BadRequest("Error");
             }
-            var ClaveCifrada = HashHelper.HashPassword(userDTO.Clave);
-            var success = Usuario.RegisterUser(_context, userDTO.Email, userDTO.Nombre, ClaveCifrada);
-            //if (success) return View("Success"); else return View("Fail");
-            if (success)
-            {
-                var datoUsuario = _context.Usuarios.First(x => x.Email == userDTO.Email);
-                return Json(new { success = true, redirect = Url.Action("Index", "Home", new { id = datoUsuario.Id }) });
-            };
-
-            return Json(new { success = false, message = "Ocurrió un error al registrar el usuario" });
+            return BadRequest("Error");
         }
-        
-        public int VerificarDatosRegister(string Email, string nombre)
-        {
-            if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(nombre))
-            {
-                return 400;
-            }
-            var usuario = _context.Usuarios.FirstOrDefault(x => x.Email == Email || x.Nombre == nombre);
-            if (usuario != null )
-            {
-                return 422;
-            }
-            return 200;
-        }
+       
 
         [HttpGet]
 
@@ -68,7 +68,19 @@ namespace Finanzas.Controllers
         {
             var User = Usuario.LoginUser(_context, Email, Clave);
             var success = User!=null?true:false; //Validacion en una linea, si user es distinto de null da true, sino false.
-            if (success) return View("Success"); else return View("Fail");
+            if (success)
+            {
+                SetearContext(User.Id, User.Nombre);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+                return RedirectToAction("Login");
+        }
+
+        private void SetearContext(int Id, string Nombre)
+        {
+            HttpContext.Session.SetString("UsuarioId", Id.ToString());
+            HttpContext.Session.SetString("UsuarioNombre", Nombre);
 
         }
     }

@@ -6,7 +6,6 @@
 <p id="MensajeError" style="color: red; display:none;">El Correo o nombre ya existe, fijate capo</p>
 
 <input type="button" onclick="register()" name="SignUpButton" id="SignUpButton" value="SignUp" />
-
 <script>
 
 
@@ -22,6 +21,11 @@
             data: JSON.stringify({ Email: email, Nombre: nombre, Clave: clave }),
             contentType: "application/json",
             dataType: "json",
+            success: function (data) {
+         
+                console.log(data.message);
+                window.location.href = '@Url.Action("Index", "Home")';
+            },
             error: function (xhr,s,p) {
                 console.log("entre por el amor de dios");
                 console.log(xhr, s, p);

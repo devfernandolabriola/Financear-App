@@ -7,6 +7,7 @@ namespace Finanzas.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        protected bool IsUserLoggedIn => HttpContext.Session.GetString("UsuarioId") != null;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -15,6 +16,7 @@ namespace Finanzas.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.IsUserLoggedIn = HttpContext.Session.GetString("UsuarioId") != null;
             return View();
         }
 
