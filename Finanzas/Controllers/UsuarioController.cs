@@ -42,7 +42,7 @@ namespace Finanzas.Controllers
                 var resultado = Usuario.VerificarDatosRegister(_context, userDTO.Email, userDTO.Nombre);
                 if (resultado == 422 || resultado == 400)
                 {
-                    return Unauthorized("Feo");
+                    return Unauthorized("Hubo un error con los datos ingresados.");
                 }
                 var ClaveCifrada = HashHelper.HashPassword(userDTO.Clave);
                 var success = Usuario.RegisterUser(_context, userDTO.Email, userDTO.Nombre, ClaveCifrada);
@@ -51,7 +51,6 @@ namespace Finanzas.Controllers
                 {
                     var datoUsuario = _context.Usuarios.First(x => x.Email == userDTO.Email);
                     SetearContext(datoUsuario.Id, datoUsuario.Nombre);
-                    //return Json(new { success = true, redirect = Url.Action("Index", "Home", new { id = datoUsuario.Id }) });
                     return Ok(new { message = "Ok" });
                 };
             } catch( Exception e)
@@ -62,19 +61,19 @@ namespace Finanzas.Controllers
         }
        
 
-        [HttpGet]
-
-        public ActionResult IniciarSesion(string Email, string Clave) 
+        [HttpPost]
+        [Route("login")]
+        public IActionResult IniciarSesion([FromBody] UsuarioLoginDTO userDTO) 
         {
-            var User = Usuario.LoginUser(_context, Email, Clave);
-            var success = User!=null?true:false; //Validacion en una linea, si user es distinto de null da true, sino false.
+            var userSearched = Usuario.LoginUser(_context, userDTO.Nombre, userDTO.Clave);
+            var success = userSearched != null ? true : false; //Validacion en una linea, si user es distinto de null da true, sino false.
             if (success)
             {
-                SetearContext(User.Id, User.Nombre);
-                return RedirectToAction("Index", "Home");
+                SetearContext(userSearched.Id, userSearched.Nombre);
+                return Ok(new { message = "Ok" });
             }
             else
-                return RedirectToAction("Login");
+                return BadRequest("Error");
         }
 
         private void SetearContext(int Id, string Nombre)

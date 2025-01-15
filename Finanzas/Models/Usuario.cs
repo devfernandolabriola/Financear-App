@@ -50,9 +50,9 @@ public partial class Usuario
         } 
     }
 
-    public static Usuario? LoginUser(FinanzasAppContext context,string Email, string Clave)
+    public static Usuario? LoginUser(FinanzasAppContext context, string username, string Clave)
     {
-        var usuario = context.Usuarios.FirstOrDefault(x => x.Email == Email);
+        var usuario = context.Usuarios.FirstOrDefault(x => x.Nombre == username);
         if (usuario != null)
         {
             if (HashHelper.HashPassword(Clave) == usuario.Clave)
@@ -84,8 +84,10 @@ public partial class Usuario
 
     public static string DevuelvoMontoTotal(FinanzasAppContext context, int IdUsuario)
     {
-        //TODO: CONTINUAR LOGICA
-        var cuentasUsuario = context.CuentasPorUsuarios.Where(x => x.IdUsuario == IdUsuario);
-        return string.Empty;
+        decimal monto;
+        var cuentasUsuario = context.CuentasPorUsuarios
+            .Where(x => x.IdUsuario == IdUsuario)
+            .Sum(m => decimal.TryParse(m.MontoTotal, out monto) ? monto : 0);
+        return cuentasUsuario.ToString();
     } 
 }

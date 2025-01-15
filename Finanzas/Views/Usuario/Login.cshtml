@@ -3,11 +3,33 @@
 *@
 @{
 }
-@model Finanzas.Models.Usuario
+@model Finanzas.DTO.UsuarioLoginDTO
 
-@using (Html.BeginForm("IniciarSesion", "Usuario", FormMethod.Get)) {
-    @Html.TextBoxFor(u => u.Email, new { @placeholder = "Email" })
-    @Html.PasswordFor(u => u.Clave, new { @placeholder = "Clave", @minLength="8"})
+@Html.TextBoxFor(u => u.Nombre, new { @id = "Nombre", @placeholder = "Nombre" })
+@Html.PasswordFor(u => u.Clave, new { @id = "Clave", @placeholder = "Clave", @minLength = "8" })
+<p id="MensajeError" style="color: red; display:none;">Nombre de usuario o clave incorrectos.</p>
 
-    <input type="submit" name="LoginButton" value="Ingresar" />
-}
+<input type="button" onclick="login()" name="LogInButton" id="LogInButton" value="Login" />
+<script>
+
+
+    function login() {
+        let nombre = $('#Nombre').val();
+        let clave = $('#Clave').val();
+
+        $.ajax({
+            url: '@Url.Action("IniciarSesion", "Usuario")',
+            method: "POST",
+            data: JSON.stringify({ Nombre: nombre, Clave: clave }),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+
+                window.location.href = '@Url.Action("Index", "Home")';
+            },
+            error: function (xhr,s,p) {
+                document.getElementById("MensajeError").style.display = "inline";
+            }
+        });
+    };
+</script>

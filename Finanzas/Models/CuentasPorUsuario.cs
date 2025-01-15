@@ -14,5 +14,5 @@ public partial class CuentasPorUsuario
     public int IdMoneda { get; set; }
 
     public int IdMovimiento { get; set; }
-    public string 
+    public string MontoTotal { get; set; }
 }

@@ -1,10 +1,10 @@
-﻿@model Finanzas.Models.Usuario
+﻿@model Finanzas.DTO.UsuarioDTO
 
 @Html.TextBoxFor(u => u.Email, new { @id = "Email", @placeholder = "Email" })
 @Html.TextBoxFor(u => u.Nombre, new { @id = "Nombre", @placeholder = "Nombre" })
 @Html.PasswordFor(u => u.Clave, new { @id = "Clave", @placeholder = "Clave", @minLength = "8" })
-<p id="MensajeError" style="color: red; display:none;">El Correo o nombre ya existe, fijate capo</p>
-
+<p id="UsuarioMailExisten" style="color: red; display:none;">El correo o usuario ya existen.</p>
+<p id="CompletarDatos" style="color: red; display:none;">Todos los datos tienen que tener algun valor.</p>
 <input type="button" onclick="register()" name="SignUpButton" id="SignUpButton" value="SignUp" />
 <script>
 
@@ -13,23 +13,26 @@
         let email = $('#Email').val();
         let nombre = $('#Nombre').val();
         let clave = $('#Clave').val();
-        console.log(email);
+        let emailLimpio = email.replaceAll(' ', '');
+		let nombreLimpio = nombre.replaceAll(' ', '');
+		let claveLimpio = clave.replaceAll(' ', '');
+        if(emailLimpio == "" || nombreLimpio == "" || claveLimpio == ""){
+            document.getElementById("CompletarDatos").style.display = "inline";
+			return;
+		}
 
         $.ajax({
             url: '@Url.Action("Register", "Usuario")',
             method: "POST",
-            data: JSON.stringify({ Email: email, Nombre: nombre, Clave: clave }),
+            data: JSON.stringify({ Email: emailLimpio, Nombre: nombreLimpio, Clave: claveLimpio }),
             contentType: "application/json",
             dataType: "json",
             success: function (data) {
          
-                console.log(data.message);
                 window.location.href = '@Url.Action("Index", "Home")';
             },
             error: function (xhr,s,p) {
-                console.log("entre por el amor de dios");
-                console.log(xhr, s, p);
-                document.getElementById("MensajeError").style.display = "inline";
+                document.getElementById("UsuarioMailExisten").style.display = "inline";
             }
         });
     };
