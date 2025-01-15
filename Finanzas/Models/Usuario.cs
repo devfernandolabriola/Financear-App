@@ -82,29 +82,35 @@ public partial class Usuario
         return 200;
     }
 
-    public static List<(int IdMoneda, decimal MontoTotal)> DevuelvoMontoTotalXCuenta(FinanzasAppContext context, int IdUsuario)
+    public static List<(int IdMoneda, decimal MontoTotal, string cuentaNombre)> DevuelvoMontoTotalXCuenta(FinanzasAppContext context, int IdUsuario)
     {
-        //decimal monto;
-        //var cuentasUsuario = context.CuentasPorUsuarios
-        //    .Where(x => x.IdUsuario == IdUsuario)
-        //    .AsEnumerable()
-        //    .Sum(m => decimal.TryParse(m.MontoTotal, out monto) ? monto : 0);
-        //return cuentasUsuario.ToString();
         return context.CuentasPorUsuarios
-        .Where(x => x.IdUsuario == IdUsuario)
-        .AsEnumerable() // Switch to client-side for parsing
-        .GroupBy(c => c.IdMoneda) // Group by IdMoneda
-        .Select(group =>
-        {
-            decimal totalMonto = group.Sum(c =>
+            .Where(x => x.IdUsuario == IdUsuario)
+            .Join(
+                context.Cuentas, // The table to join
+                cuentaUsuario => cuentaUsuario.IdCuenta, // Key in CuentasPorUsuarios
+                cuenta => cuenta.Id, // Key in Cuentas
+                (cuentaUsuario, cuenta) => new // Select both tables
+                {
+                    cuentaUsuario.IdMoneda,
+                    cuentaUsuario.MontoTotal,
+                    CuentaNombre = cuenta.Nombre // Assuming 'Nombre' is the column name in Cuentas
+                }
+            )
+            .AsEnumerable() // Switch to client-side for parsing
+            .GroupBy(c => new { c.IdMoneda, c.CuentaNombre }) // Group by IdMoneda and CuentaNombre
+            .Select(group =>
             {
-                decimal monto;
-                return decimal.TryParse(c.MontoTotal, out monto) ? monto : 0;
-            });
+                decimal totalMonto = group.Sum(c =>
+                {
+                    decimal monto;
+                    return decimal.TryParse(c.MontoTotal, out monto) ? monto : 0;
+                });
 
-            return (IdMoneda: group.Key, MontoTotal: totalMonto); // Return tuple with IdMoneda and total
-        })
-        .ToList(); // Convert to list
+                return (IdMoneda: group.Key.IdMoneda, MontoTotal: totalMonto, CuentaNombre: group.Key.CuentaNombre);
+            })
+            .ToList(); // Convert to list
+
     }
 
     internal static bool VerificarCuentasVinculadasUsuario(FinanzasAppContext context, int v)

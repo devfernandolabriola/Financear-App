@@ -7,6 +7,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Banco</th>
                     <th>IdMoneda</th>
                     <th>MontoTotal</th>
                 </tr>
@@ -14,11 +15,12 @@
             <tbody>
                 @{
                     // Cast ViewBag data to List<(int IdMoneda, decimal MontoTotal)>
-                    var montos = (List<(int IdMoneda, decimal MontoTotal)>)ViewBag.MontosPorMoneda;
+                    var montos = (List<(int IdMoneda, decimal MontoTotal, string Nombre)>)ViewBag.MontosPorMoneda;
 
                     foreach (var item in montos)
                     {
                         <tr>
+                            <td>@item.Nombre</td>
                             <td>@item.IdMoneda</td>
                             <td>@item.MontoTotal</td>
                         </tr>
