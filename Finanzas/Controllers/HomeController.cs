@@ -2,6 +2,7 @@ using Finanzas.Models;
 using Finanzas.Models.Context;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Finanzas.Controllers
 {
