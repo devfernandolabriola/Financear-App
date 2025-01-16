@@ -50,15 +50,13 @@ public partial class Usuario
         } 
     }
 
-    public static Usuario? LoginUser(FinanzasAppContext context,string Email, string Clave)
+    public static Usuario? LoginUser(FinanzasAppContext context, string username, string Clave)
     {
-        var usuario = context.Usuarios.FirstOrDefault(x => x.Email == Email);
-        bool datosCorrectos = false;
+        var usuario = context.Usuarios.FirstOrDefault(x => x.Nombre == username);
         if (usuario != null)
         {
-            if (CompararClave(HashHelper.HashPassword(Clave), usuario.Clave))
+            if (HashHelper.HashPassword(Clave) == usuario.Clave)
             {
-                datosCorrectos = true;
                 return usuario;
             } else
             {
@@ -70,8 +68,53 @@ public partial class Usuario
 
     }
 
-    private static bool CompararClave(string ClaveForm, string ClaveDb)
+    public static int VerificarDatosRegister(FinanzasAppContext context, string Email, string nombre)
     {
-        return ClaveForm == ClaveDb;
+        if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(nombre))
+        {
+            return 400;
+        }
+        var usuario = context.Usuarios.FirstOrDefault(x => x.Email == Email || x.Nombre == nombre);
+        if (usuario != null)
+        {
+            return 422;
+        }
+        return 200;
+    }
+
+    public static List<(int IdMoneda, decimal MontoTotal, string cuentaNombre)> DevuelvoMontoTotalXCuenta(FinanzasAppContext context, int IdUsuario)
+    {
+        return context.CuentasPorUsuarios
+            .Where(x => x.IdUsuario == IdUsuario)
+            .Join(
+                context.Cuentas, // The table to join
+                cuentaUsuario => cuentaUsuario.IdCuenta, // Key in CuentasPorUsuarios
+                cuenta => cuenta.Id, // Key in Cuentas
+                (cuentaUsuario, cuenta) => new // Select both tables
+                {
+                    cuentaUsuario.IdMoneda,
+                    cuentaUsuario.MontoTotal,
+                    CuentaNombre = cuenta.Nombre // Assuming 'Nombre' is the column name in Cuentas
+                }
+            )
+            .AsEnumerable() // Switch to client-side for parsing
+            .GroupBy(c => new { c.IdMoneda, c.CuentaNombre }) // Group by IdMoneda and CuentaNombre
+            .Select(group =>
+            {
+                decimal totalMonto = group.Sum(c =>
+                {
+                    decimal monto;
+                    return decimal.TryParse(c.MontoTotal, out monto) ? monto : 0;
+                });
+
+                return (IdMoneda: group.Key.IdMoneda, MontoTotal: totalMonto, CuentaNombre: group.Key.CuentaNombre);
+            })
+            .ToList(); // Convert to list
+
+    }
+
+    internal static bool VerificarCuentasVinculadasUsuario(FinanzasAppContext context, int v)
+    {
+        return context.CuentasPorUsuarios.Any(x => x.IdUsuario == v);
     }
 }

@@ -1,8 +1,91 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@if (ViewBag.IsUserLoggedIn != null && ViewBag.IsUserLoggedIn) {
+	if (ViewBag.TieneCuentas) {
+        <div id="chartsContainer" style="width: 40%; margin: auto;"></div>
+
+        <script>
+            $(document).ready(function () {
+                // Datos desde el servidor
+                const data = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.MontosPorMoneda));
+                console.log(data);
+
+                // Agrupar los datos por Item1
+                const groupedData = data.reduce((acc, item) => {
+                    const key = item.Item1;
+                    if (!acc[key]) acc[key] = [];
+                    acc[key].push(item);
+                    return acc;
+                }, {});
+
+                // Colores predefinidos
+                const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
+
+                // Crear un gráfico por cada grupo
+                const container = document.getElementById('chartsContainer');
+                Object.keys(groupedData).forEach((key, index) => {
+                    const group = groupedData[key];
+                    const labels = group.map(item => item.Item3); // NombreCuenta
+                    const values = group.map(item => item.Item2); // Valores totales
+
+                    // Crear un título para este gráfico
+                    const title = document.createElement('h3');
+                    title.textContent = `IdMoneda = ${key}`;
+                    title.style.textAlign = 'center';
+                    container.appendChild(title);
+
+                    // Crear un canvas para este gráfico
+                    const canvas = document.createElement('canvas');
+                    canvas.id = `chart-${key}`;
+                    canvas.style.marginBottom = '40px';
+                    container.appendChild(canvas);
+
+                    // Crear el gráfico
+                    const ctx = canvas.getContext('2d');
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                data: values,
+                                backgroundColor: colors.slice(0, values.length), // Usar solo los colores necesarios
+                                hoverOffset: 10
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: function (tooltipItem) {
+                                            return values[tooltipItem.dataIndex];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
+
+
+	} else {
+		<div class="text-center">
+			<h1 class="display-4">No tienes cuentas asociadas.</h1>
+			<p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+		</div>
+	}
+
+} else {
+	<div class="text-center">
+		<h1 class="display-4">Welcome</h1>
+		<p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+	</div>
+}

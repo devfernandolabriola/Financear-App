@@ -25,13 +25,13 @@ public partial class FinanzasAppContext : DbContext
 
     public virtual DbSet<Movimiento> Movimientos { get; set; }
 
-    public virtual DbSet<TipoMovimiento> TipoMovimientos { get; set; }
-
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-IALGCQJ;Initial Catalog=FinanzasApp;Integrated Security=True;TrustServerCertificate=true");
+                //=> optionsBuilder.UseSqlServer("Data Source=NEAR;Initial Catalog=FinanzasApp;Integrated Security=True;TrustServerCertificate=true");
+                => optionsBuilder.UseSqlServer("Data Source=DESKTOP-IALGCQJ;Initial Catalog=FinanzasApp;Integrated Security=True;TrustServerCertificate=true");
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -85,18 +85,6 @@ public partial class FinanzasAppContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.Fecha).HasColumnType("datetime");
-        });
-
-        modelBuilder.Entity<TipoMovimiento>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__TipoMovi__3213E83FB6F3FCD0");
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
-            entity.Property(e => e.Nombre)
-                .HasMaxLength(100)
-                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Usuario>(entity =>

@@ -1,6 +1,9 @@
-﻿using Finanzas.Models;
+﻿using Finanzas.DTO;
+using Finanzas.Models;
 using Finanzas.Models.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -24,51 +27,59 @@ namespace Finanzas.Controllers
             return View();
         }
 
-        [HttpPost]
-        [Route("register")]
-        public ActionResult Register(string Email, string Nombre, string Clave)
+        public IActionResult Logout()
         {
-            var resultado = VerificarCorreo(Email);
-            if (resultado == 422)
-            {
-                return StatusCode(422);
-            }
-            var ClaveCifrada = HashHelper.HashPassword(Clave);
-            var success = Usuario.RegisterUser(_context, Email, Nombre, ClaveCifrada);
-            //if (success) return View("Success"); else return View("Fail");
-            if (success)
-            {
-                var datoUsuario = _context.Usuarios.First(x => x.Email == Email);
-                return RedirectToAction("Index", "Home", new
-                {
-                    id = datoUsuario.Id
-                });
-            }
-            return StatusCode(500);
-        } 
-        
-
-        public int VerificarCorreo(string Email)
-        {
-            if (string.IsNullOrEmpty(Email))
-            {
-                return 400;
-            }
-            var usuario = _context.Usuarios.FirstOrDefault(x => x.Email == Email);
-            if (usuario != null)
-            {
-                return 422;
-            }
-            return 200;
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
         }
 
-        [HttpGet]
-
-        public ActionResult IniciarSesion(string Email, string Clave) 
+        [HttpPost]
+        [Route("register")]
+        public IActionResult Register([FromBody] UsuarioDTO userDTO/*string Email*//*, string Nombre, string Clave*/)
         {
-            var User = Usuario.LoginUser(_context, Email, Clave);
-            var success = User!=null?true:false; //Validacion en una linea, si user es distinto de null da true, sino false.
-            if (success) return View("Success"); else return View("Fail");
+            try
+            {
+                var resultado = Usuario.VerificarDatosRegister(_context, userDTO.Email, userDTO.Nombre);
+                if (resultado == 422 || resultado == 400)
+                {
+                    return Unauthorized("Hubo un error con los datos ingresados.");
+                }
+                var ClaveCifrada = HashHelper.HashPassword(userDTO.Clave);
+                var success = Usuario.RegisterUser(_context, userDTO.Email, userDTO.Nombre, ClaveCifrada);
+                //if (success) return View("Success"); else return View("Fail");
+                if (success)
+                {
+                    var datoUsuario = _context.Usuarios.First(x => x.Email == userDTO.Email);
+                    SetearContext(datoUsuario.Id, datoUsuario.Nombre);
+                    return Ok(new { message = "Ok" });
+                };
+            } catch( Exception e)
+            {
+                return BadRequest("Error");
+            }
+            return BadRequest("Error");
+        }
+       
+
+        [HttpPost]
+        [Route("login")]
+        public IActionResult IniciarSesion([FromBody] UsuarioLoginDTO userDTO) 
+        {
+            var userSearched = Usuario.LoginUser(_context, userDTO.Nombre, userDTO.Clave);
+            var success = userSearched != null ? true : false; //Validacion en una linea, si user es distinto de null da true, sino false.
+            if (success)
+            {
+                SetearContext(userSearched.Id, userSearched.Nombre);
+                return Ok(new { message = "Ok" });
+            }
+            else
+                return BadRequest("Error");
+        }
+
+        private void SetearContext(int Id, string Nombre)
+        {
+            HttpContext.Session.SetString("UsuarioId", Id.ToString());
+            HttpContext.Session.SetString("UsuarioNombre", Nombre);
 
         }
     }

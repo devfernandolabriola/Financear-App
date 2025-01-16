@@ -12,4 +12,5 @@ public partial class Movimiento
     public DateTime Fecha { get; set; }
 
     public int IdCategoria { get; set; }
+    public int IdCuentaXUsuario { get; set; }
 }
