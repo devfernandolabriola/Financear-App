@@ -3,6 +3,7 @@ using Finanzas.Models.Context;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Finanzas.Controllers
 {
@@ -29,7 +30,18 @@ namespace Finanzas.Controllers
                 if (tieneCuentas)
                 {
                     ViewBag.TieneCuentas = true;
-                    ViewBag.MontosPorMoneda = Usuario.DevuelvoMontoTotalXCuenta(_context, int.Parse(HttpContext.Session.GetString("UsuarioId")));
+                    var montosPorMoneda = Usuario.DevuelvoMontoTotalXCuenta(_context, int.Parse(HttpContext.Session.GetString("UsuarioId")));
+                    ViewBag.MontosPorMoneda = montosPorMoneda;
+                    var agrupadosXMoneda = montosPorMoneda.GroupBy(montosPorMoneda => montosPorMoneda.Item1).ToList();
+                    var montoTotalXMoneda = agrupadosXMoneda
+                        .Select(group => new
+                        {
+                            Key = group.Key,
+                            Sum = group.Sum(item => item.MontoTotal)
+                        })
+                        .ToArray();
+                    ViewBag.MontoTotalXMoneda = montoTotalXMoneda;
+                    ViewBag.NombreMonedas = _context.Monedas.ToList();
                 }
             }
             return View();

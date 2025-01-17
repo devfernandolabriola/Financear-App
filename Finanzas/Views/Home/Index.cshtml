@@ -1,6 +1,5 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-
 }
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -13,6 +12,8 @@
             $(document).ready(function () {
                 // Datos desde el servidor
                 const data = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.MontosPorMoneda));
+                const monedas = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.NombreMonedas));
+                const montoTotalXMoneda = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.MontoTotalXMoneda));
                 console.log(data);
 
                 // Agrupar los datos por Item1
@@ -33,9 +34,15 @@
                     const labels = group.map(item => item.Item3); // NombreCuenta
                     const values = group.map(item => item.Item2); // Valores totales
 
+                    const matchedMoneda = monedas.filter(moneda => moneda.Id == key);
+                    const valorTotalMoneda = data.filter(t => t.Item1 == key);
+                    const montoTotalMoneda = montoTotalXMoneda.filter(m => m.Key == key);
+                    
+                    console.log(montoTotalMoneda)
                     // Crear un título para este gráfico
+
                     const title = document.createElement('h3');
-                    title.textContent = `IdMoneda = ${key}`;
+                    title.textContent = `${matchedMoneda[0].Nombre} - ${montoTotalMoneda[0].Sum}`;
                     title.style.textAlign = 'center';
                     container.appendChild(title);
 
