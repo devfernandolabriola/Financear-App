@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
+using System.Reflection.Metadata;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Finanzas.Controllers
@@ -70,6 +71,7 @@ namespace Finanzas.Controllers
             if (success)
             {
                 SetearContext(userSearched.Id, userSearched.Nombre);
+                
                 return Ok(new { message = "Ok" });
             }
             else

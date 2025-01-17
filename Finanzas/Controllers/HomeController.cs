@@ -24,6 +24,9 @@ namespace Finanzas.Controllers
             ViewBag.IsUserLoggedIn = HttpContext.Session.GetString("UsuarioId") != null;
             if(HttpContext.Session.GetString("UsuarioId") != null)
             {
+                //Los ViewBag son un tipo de variable de asp net donde se pueden almacenar datos para enviarles a las views
+                ViewBag.NombreUsuario = HttpContext.Session.GetString("UsuarioNombre");
+
                 ViewBag.TieneCuentas = false;
                 bool tieneCuentas = Usuario.VerificarCuentasVinculadasUsuario(_context, int.Parse(HttpContext.Session.GetString("UsuarioId")));
                 if (tieneCuentas)
