@@ -4,6 +4,7 @@ using Finanzas.Models.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Reflection.Metadata;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -20,12 +21,18 @@ namespace Finanzas.Controllers
         }
         public IActionResult SignUp()
         {
-            return View();
+            if (HttpContext.Session.GetString("UsuarioId").IsNullOrEmpty())
+                return View();
+            else
+                return RedirectToAction("Error", "Home");
         }
 
         public IActionResult Login()
         {
-            return View();
+            if (HttpContext.Session.GetString("UsuarioId").IsNullOrEmpty())
+                return View();
+            else
+                return RedirectToAction("Error", "Home");
         }
 
         public IActionResult Logout()
