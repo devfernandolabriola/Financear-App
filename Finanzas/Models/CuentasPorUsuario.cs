@@ -14,4 +14,6 @@ public partial class CuentasPorUsuario
     public int IdMoneda { get; set; }
 
     public string MontoTotal { get; set; }
+
+    public bool IsCuentaCustom { get; set; }
 }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Finanzas.Models.Context;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 
 namespace Finanzas.Models;
@@ -9,5 +12,6 @@ public partial class Cuenta
 
     public string Nombre { get; set; } = null!;
 
-    public int IdCreador { get; set; }
+
 }
+
