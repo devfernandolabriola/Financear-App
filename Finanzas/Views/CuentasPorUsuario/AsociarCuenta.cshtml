@@ -1,0 +1,93 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    
+*@
+@using Newtonsoft.Json
+
+@{
+    @model Finanzas.Models.Moneda
+     List<SelectListItem> Monedas = (List<SelectListItem>)ViewBag.Monedas; 
+    // var cuentasJson = JsonConvert.SerializeObject(cuentas);
+    // @Html.TextBox("cuentas",cuentas,new{@class="Textbox",@id="Textbox"});
+    
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script async src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+@Html.DropDownList("monedas",Monedas,"Seleccione la moneda",new {@class="form-control", @id="Moneda"})
+
+
+@Html.TextBoxFor(c => c.Nombre,new{@id="Cuenta",@placeholder="Ingrese Cuenta"})
+<p id="CuentaVacio" style="color: red; display:none;">Ningun campo debe quedar vacio</p>
+<input type="button" onclick="SearchAccount()" value="Asociar cuenta"/>
+
+<script>
+    function SearchAccount() {
+        let NombreCuenta = $('#Cuenta').val().trim();
+        let Moneda = $('#Moneda').val().trim();
+        if (NombreCuenta === "" || Moneda === "") {
+            document.getElementById("CuentaVacio").style.display = "inline";
+        }
+
+        let formData = new FormData();
+
+        formData.append("NombreCuenta", NombreCuenta);
+        formData.append("moneda", Moneda);
+
+        console.log(formData);
+
+        $.ajax({
+            url: '@Url.Action("VincularCuenta", "CuentasPorUsuario")',
+            method: "POST",
+            data: formData,
+            contentType: false,  
+            processData: false,
+            success: function (data) {
+                window.location.href = '@Url.Action("Index", "Home")';
+            }
+        });
+    
+    };
+
+
+
+</script>
+
+
+
+ @*    <script>
+        
+
+        $(document).ready(function () {
+            //  $("#accountSearch").autocomplete("enable")
+            //  var cuentas =  Convierte el JSON en una lista JS
+            // console.log(cuentas);
+            // $("#accountSearch").autocomplete({
+            //     source: cuentas.map(c => c.Nombre), // Usa solo los nombres de cuenta
+            //     minLength: 1
+
+                $("#accountSearch").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                    url: '@Url.Action("CuentaPorUsuarioController", "AsociarCuenta")',
+                            data: { "prefix": request.term },
+                            type: 'GET',
+                            success: function (data) {
+                                console.log(data);
+                                response($.map(data, function (cuenta) {
+                                    return {
+                                        Text: cuenta.Nombre,  // Nombre de la cuenta que aparece en la lista de autocompletado
+                                        value: cuenta.Nombre   // El valor es también el nombre, o podrías usar el Id si lo prefieres
+                                    };
+                                }));
+                            }
+                        });
+                    },
+            minLength: 1
+        });
+         });
+        </script> *@
+
+
+

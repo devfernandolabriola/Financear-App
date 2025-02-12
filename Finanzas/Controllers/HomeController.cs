@@ -48,6 +48,10 @@ namespace Finanzas.Controllers
             return View();
         }
 
+        public IActionResult AsociarCuenta()
+        {
+            return View("../CuentasPorUsuario/AsociarCuenta");
+        }
         public IActionResult Privacy()
         {
             return View();
