@@ -19,8 +19,6 @@ public partial class FinanzasAppContext : DbContext
 
     public virtual DbSet<Cuenta> Cuentas { get; set; }
 
-    public virtual DbSet<CuentasCustom> CuentasCustom { get; set; }
-
     public virtual DbSet<CuentasPorUsuario> CuentasPorUsuarios { get; set; }
 
     public virtual DbSet<Moneda> Monedas { get; set; }
@@ -58,14 +56,6 @@ public partial class FinanzasAppContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("nombre");
-        });
-
-        modelBuilder.Entity<CuentasCustom>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Nombre).HasMaxLength(50).IsUnicode(false).HasColumnName("Nombre");
         });
 
         modelBuilder.Entity<CuentasPorUsuario>(entity =>
