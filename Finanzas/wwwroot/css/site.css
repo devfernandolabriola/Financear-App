@@ -1,5 +1,14 @@
+
+#body {
+    font-family: "Roboto Condensed", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    overflow: hidden;
+}
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+
 }
 
 @media (min-width: 768px) {
@@ -41,3 +50,20 @@ body {
         .ui-autocomplete li:hover {
             background-color: #f4f4f4;
         }
+#Tbx {
+    justify-content: center;
+    text-align: center;
+}
+
+#SignUpButton {
+    justify-content:center;
+    text-align:center;
+}
+#LoginButton {
+    justify-content:center;
+    text-align:center;
+}
+
+.dropdown-item:hover {
+    background-color:gray;
+}

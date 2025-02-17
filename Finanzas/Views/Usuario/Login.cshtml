@@ -4,12 +4,26 @@
 @{
 }
 @model Finanzas.DTO.UsuarioLoginDTO
+<div class="input-group" id="Tbx">
+    <div class="input-group-prepend">
+        <span class="input-group-text"><i class="bi bi-person"></i></span>
+    </div>
+    @Html.TextBoxFor(u => u.Nombre, new { @id = "Nombre", @placeholder = "Nombre", @Class = "TextLogin" })
+</div>
+<br />
+<div class="input-group" id="Tbx">
+    <div class="input-group-prepend">
+        <span class="input-group-text"><i class="bi bi-key"></i></span>
+    </div>
+    @Html.PasswordFor(u => u.Clave, new { @id = "Clave", @placeholder = "Clave", @minLength = "8", @Class = "TextLogin" })
+</div>
 
-@Html.TextBoxFor(u => u.Nombre, new { @id = "Nombre", @placeholder = "Nombre" })
-@Html.PasswordFor(u => u.Clave, new { @id = "Clave", @placeholder = "Clave", @minLength = "8" })
+<div id="LoginButton">
 <p id="MensajeError" style="color: red; display:none;">Nombre de usuario o clave incorrectos.</p>
+<br />
 
-<input type="button" onclick="login()" name="LogInButton" id="LogInButton" value="Login" />
+<input type="button" onclick="login()" class="btn btn-primary" name="LogInButton" id="LogInButton" value="Login" />
+</div>
 <script>
 
 

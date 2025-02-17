@@ -15,16 +15,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Finanzas</title>
-
+    @* Agregados manualmente *@
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    @* Agregados manualmente *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Finanzas.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body id="body">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Finanzas</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-secondary border-bottom box-shadow mb-3">
+            <div  class="container-fluid">
+                <a class="navbar-brand text-light" asp-controller="Home" asp-action="Index">Finanzas</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -32,18 +37,18 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a  class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" id="navSign" asp-area="" asp-controller="Usuario" asp-action="SignUp">SignUp</a>
+                            <a class="nav-link text-light" id="navSign" asp-area="" asp-controller="Usuario" asp-action="SignUp">SignUp</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" id="navLog" asp-area="" asp-controller="Usuario" asp-action="Login">Iniciar sesion</a>
+                            <a class="nav-link text-light" id="navLog" asp-area="" asp-controller="Usuario" asp-action="Login">Iniciar sesion</a>
                         </li>
 
                         @if (isUserLoggedIn)
@@ -52,10 +57,11 @@
                                 document.getElementById("navSign").style.display = "none";
                                 document.getElementById("navLog").style.display = "none";
                             </script>
-                            <div class="dropdown">
-                                <a id="username" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">@userName</a>
-                                    <ul class="dropdown-menu ms-1">
-                                            <li><a class="dropdown-item" asp-area="" asp-controller="Usuario" asp-action="Logout">Logout</a></li>
+                            <div class="dropdown ms-1">
+                                <a id="username" class="nav-link dropdown-toggle text-light" role="button" data-bs-toggle="dropdown">@userName</a>
+                                    <ul class="dropdown-menu dropdown-menu-end bg-secondary">
+                                    <li><a id="DropdownLoginMenu" class="dropdown-item text-light" asp-area="" asp-controller="CuentasPorUsuario" asp-action="AsociarCuenta">Asociar Cuenta</a></li>
+                                    <li><a id="DropdownLoginMenu" class="dropdown-item text-light" asp-area="" asp-controller="Usuario" asp-action="Logout">Logout</a></li>
 							        </ul>
                             </div>
                         }

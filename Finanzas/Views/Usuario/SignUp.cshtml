@@ -1,11 +1,35 @@
 ﻿@model Finanzas.DTO.UsuarioDTO
 
-@Html.TextBoxFor(u => u.Email, new { @id = "Email", @placeholder = "Email" })
-@Html.TextBoxFor(u => u.Nombre, new { @id = "Nombre", @placeholder = "Nombre" })
-@Html.PasswordFor(u => u.Clave, new { @id = "Clave", @placeholder = "Clave", @minLength = "8" })
-<p id="UsuarioMailExisten" style="color: red; display:none;">El correo o usuario ya existen.</p>
+<div class="input-group" id="Tbx">
+    <div class="input-group-prepend">
+        <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+    </div>
+    @Html.TextBoxFor(u => u.Email, new { @id = "Email", @placeholder = "Email", @Class = "TextSign" })
+</div>
+<br />
+<div class="input-group" id="Tbx">
+    <div class="input-group-prepend">
+        <span class="input-group-text"><i class="bi bi-person"></i></span>
+    </div>
+    @Html.TextBoxFor(u => u.Nombre, new { @id = "Nombre", @placeholder = "Nombre", @Class = "TextSign" })
+</div>
+<br />
+<div class="input-group" id="Tbx">
+    <div class="input-group-prepend">
+        <span class="input-group-text"><i class="bi bi-key"></i></span>
+    </div>
+    @Html.PasswordFor(u => u.Clave, new { @id = "Clave", @placeholder = "Clave", @minLength = "8", @Class = "TextSign" })
+</div>
+<div id="SignUpButton">
+
 <p id="CompletarDatos" style="color: red; display:none;">Todos los datos tienen que tener algun valor.</p>
-<input type="button" onclick="register()" name="SignUpButton" id="SignUpButton" value="SignUp" />
+ <p id="UsuarioMailExisten" style="color: red; display:none;">El correo o usuario ya existen.</p>
+
+<br />
+
+<input type="button" class="btn btn-success" onclick="register()" name="SignUpButton" id="SignUpButton" value="Registrarse" />
+
+</div>
 <script>
 
 
@@ -17,7 +41,11 @@
 		let nombreLimpio = nombre.replaceAll(' ', '');
 		let claveLimpio = clave.replaceAll(' ', '');
         if(emailLimpio == "" || nombreLimpio == "" || claveLimpio == ""){
+            if (document.getElementById("UsuarioMailExisten").style.display == "inline") {
+                document.getElementById("UsuarioMailExisten").style.display = "none"
+            }
             document.getElementById("CompletarDatos").style.display = "inline";
+
 			return;
 		}
 
@@ -32,6 +60,9 @@
                 window.location.href = '@Url.Action("Index", "Home")';
             },
             error: function (xhr,s,p) {
+                if (document.getElementById("CompletarDatos").style.display == "inline") {
+                    document.getElementById("CompletarDatos").style.display = "none"
+                }
                 document.getElementById("UsuarioMailExisten").style.display = "inline";
             }
         });
