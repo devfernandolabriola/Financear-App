@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace Finanzas.Models;
 
-public enum TipoMovimiento
+public enum TipoAccion
 {
-    INGRESO, TRANSFERENCIA, GASTO
+    GASTO, INGRESO, TRANSFERENCIA 
 
 }
+
+

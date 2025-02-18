@@ -1,0 +1,25 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Newtonsoft.Json
+@{
+    
+    @model Finanzas.Models.Movimiento
+
+    List<SelectListItem> Movimientos = (List<SelectListItem>)ViewBag.Movimiento;
+
+    ;
+
+    List<SelectListItem> Accion = (List<SelectListItem>)ViewBag.Accion;
+  
+
+    List<SelectListItem> Categoria = (List<SelectListItem>)ViewBag.Categoria;
+
+}
+
+   
+@Html.DropDownList("Movimiento", Movimientos, "Seleccione el Movimiento")
+
+@Html.DropDownList("Accion", Accion, "Seleccione que tipo de accion es el movimiento")
+
+@Html.DropDownList("Categoria", Categoria, "Seleccione a que categoria pertenece el movimiento")
