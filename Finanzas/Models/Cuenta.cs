@@ -22,7 +22,10 @@ public partial class Cuenta
             return null;
         }
         return Cuenta.Id;
-        
+    }
+    public static string BuscarCuentaXNombre(FinanzasAppContext context, int idCuenta)
+    {
+        return context.Cuentas.FirstOrDefault(c => c.Id == idCuenta).Nombre;
     }
 
     public static bool AgregarCuenta(FinanzasAppContext context, string nombre)

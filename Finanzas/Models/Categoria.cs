@@ -11,7 +11,7 @@ public partial class Categoria
     public string Nombre { get; set; } = null!;
 
 
-    public List<Categoria> VerCategorias()
+    public static List<Categoria> VerCategorias()
     {
         FinanzasAppContext context = new FinanzasAppContext();
         var Categorias = context.Categorias.ToList();

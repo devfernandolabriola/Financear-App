@@ -86,40 +86,39 @@ namespace Finanzas.Controllers
 
         public ActionResult AgregarMovimiento()
         {
-            List<Movimiento> listmovimientos = null;
-            List<Categoria> listCategorias = null;
+            List<Categoria> listCategorias = new List<Categoria>();
+            List<CuentasPorUsuario> listCU = new List<CuentasPorUsuario>();
 
-            using(FinanzasAppContext context = new FinanzasAppContext())
+            using (FinanzasAppContext context = new FinanzasAppContext())
             {
-                var movimiento = new Movimiento();
-                listmovimientos = movimiento.VerMovimientos();
-                var categoria = new Categoria();
-                listCategorias = categoria.VerCategorias();
-
-                List<SelectListItem> movimientos = listmovimientos.ConvertAll(m =>
-                {
-                    return new SelectListItem()
-                    {
-                        Text = m.Nombre,
-                        Value = m.Nombre,
-                        Selected = false
-                    };
-                });
+                //listmovimientos = Movimiento.VerMovimientos();
+                listCategorias = Categoria.VerCategorias();
+                var user = HttpContext.Session.GetString("UsuarioId");
+                listCU = CuentasPorUsuario.VerCuentasPorUsuario(Convert.ToInt32(user));
                 List<SelectListItem> categorias = listCategorias.ConvertAll(c =>
                 {
                     return new SelectListItem()
                     {
                         Text = c.Nombre,
-                        Value = c.Nombre,
+                        Value = c.Id.ToString(),
                         Selected = false
                     };
                 });
 
-                ViewBag.Movimiento = movimientos;
-                ViewBag.Categorias = categorias;
+                List<SelectListItem> cu = listCU.ConvertAll(c =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = Cuenta.BuscarCuentaXNombre(context, c.IdCuenta),
+                        Value = c.IdCuenta.ToString(),
+                        Selected = false
+                    };
+                });
 
-                return View();
+                ViewBag.Categorias = categorias;
+                ViewBag.CU = cu;
             }
+            return View();
 
         }
     }

@@ -22,6 +22,10 @@
 <p id="CuentaVacio" style="color: red; display:none;">Ningun campo debe quedar vacio</p>
 <input type="button" onclick="SearchAccount()" value="Asociar cuenta"/>
 
+@Html.DropDownList("TipoAccion",
+        Html.GetEnumSelectList<TipoAccion>(),
+        "Seleccione tipo de movimiento", new { @class = "form-control" })
+
 <script>
     function SearchAccount() {
         let NombreCuenta = $('#Cuenta').val().trim();

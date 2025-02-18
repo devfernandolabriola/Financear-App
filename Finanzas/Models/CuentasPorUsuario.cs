@@ -1,8 +1,8 @@
 ﻿using Finanzas.Models.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.Http;
+using Finanzas.Controllers;
+
 
 namespace Finanzas.Models;
 
@@ -34,5 +34,13 @@ public partial class CuentasPorUsuario
             return false;
             
         }
+    }
+
+    public static List<CuentasPorUsuario> VerCuentasPorUsuario(int userId)
+    {
+        FinanzasAppContext context = new FinanzasAppContext();
+
+        //TODO: Retornar unicamente los nombres de las cunetas por usuario
+        return context.CuentasPorUsuarios.Where(x => x.IdUsuario == userId).ToList();
     }
 }
