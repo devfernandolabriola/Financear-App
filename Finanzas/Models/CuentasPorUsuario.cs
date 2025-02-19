@@ -19,12 +19,12 @@ public partial class CuentasPorUsuario
     public string MontoTotal { get; set; }
 
 
-    public static bool AgregarCuentaAUsuario(FinanzasAppContext context, int userid, int cuentaid, int monedaid)
+    public static bool AgregarCuentaAUsuario(FinanzasAppContext context, int userid, int cuentaid, int monedaid, string montoTotal)
     {
         try
         {
             context.Database.BeginTransaction();
-            context.Database.ExecuteSqlRaw($"Insert into CuentasPorUsuario(IdUsuario,IdCuenta,IdMoneda,MontoTotal) VALUES('{userid}','{cuentaid}','{monedaid}','0')");
+            context.Database.ExecuteSqlRaw($"Insert into CuentasPorUsuario(IdUsuario,IdCuenta,IdMoneda,MontoTotal) VALUES('{userid}','{cuentaid}','{monedaid}','{montoTotal}')");
             context.Database.CommitTransaction();
             return true;
         }
