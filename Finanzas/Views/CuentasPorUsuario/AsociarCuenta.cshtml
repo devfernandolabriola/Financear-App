@@ -1,35 +1,72 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-    
+
 *@
 @using Newtonsoft.Json
-
+@model Finanzas.Models.CuentasPorUsuario
 @{
-    @model Finanzas.Models.Moneda
-     List<SelectListItem> Monedas = (List<SelectListItem>)ViewBag.Monedas; 
-    // var cuentasJson = JsonConvert.SerializeObject(cuentas);
-    // @Html.TextBox("cuentas",cuentas,new{@class="Textbox",@id="Textbox"});
-    
+    List<SelectListItem> Monedas = (List<SelectListItem>)ViewBag.ListItemMonedas;
+    var currencyFormatsJson = JsonConvert.SerializeObject(ViewBag.Monedas);    
 }
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script async src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="/js/currency.js"></script>
 
 @Html.DropDownList("monedas",Monedas,"Seleccione la moneda",new {@class="form-control", @id="Moneda"})
 
 
-@Html.TextBoxFor(c => c.Nombre,new{@id="Cuenta",@placeholder="Ingrese Cuenta"})
+@* @Html.TextBoxFor(c => c.,new{@id="Cuenta",@placeholder="Ingrese Cuenta"})
+ *@
+
+<input id="Cuenta" name="Cuenta" placeholder="Ingrese cuenta" />
+
+@Html.TextBoxFor(c => c.MontoTotal, new { @id = "MontoTotal", @placeholder = "Ingrese monto" })
+
 <p id="CuentaVacio" style="color: red; display:none;">Ningun campo debe quedar vacio</p>
+
 <input type="button" onclick="SearchAccount()" value="Asociar cuenta"/>
 
-@Html.DropDownList("TipoAccion",
-        Html.GetEnumSelectList<TipoAccion>(),
-        "Seleccione tipo de movimiento", new { @class = "form-control" })
+
 
 <script>
+    var rawValue = "";
+    document.addEventListener("DOMContentLoaded", function () {
+        const monedaSelect = document.getElementById("Moneda");
+        var valorInput = document.getElementById("MontoTotal");
+
+        // Diccionario de monedas con sus formatos correctos
+        const currencyFormats = {};
+        const monedas = @Html.Raw(currencyFormatsJson)
+
+        monedas.forEach(moneda => {
+            currencyFormats[moneda.Id] = { locale: moneda.Locale, currency: moneda.Nombre };
+        });
+
+        console.log(currencyFormats);
+
+        valorInput.addEventListener("input", function () {
+            // Permitir solo números y punto o coma según el idioma
+            rawValue = this.value.replace(/[^0-9.,]/g, "");
+        });
+
+        valorInput.addEventListener("blur", function () {
+            const moneda = monedaSelect.value;
+            const formatData = currencyFormats[moneda] || currencyFormats["ARS"];
+            const numericValue = parseFloat(rawValue.replace(",", ".")) || 0;
+            this.value = formatCurrency(numericValue, formatData.locale, formatData.currency);
+        });
+
+        valorInput.addEventListener("focus", function () {
+            // Restaurar el valor sin formato cuando el usuario edita el campo
+            this.value = rawValue;
+        });
+    });
+
     function SearchAccount() {
         let NombreCuenta = $('#Cuenta').val().trim();
         let Moneda = $('#Moneda').val().trim();
+        let MontoTotal = rawValue.trim();
         if (NombreCuenta === "" || Moneda === "") {
             document.getElementById("CuentaVacio").style.display = "inline";
         }
@@ -38,6 +75,7 @@
 
         formData.append("NombreCuenta", NombreCuenta);
         formData.append("moneda", Moneda);
+		formData.append("MontoTotal", MontoTotal);
 
         console.log(formData);
 
@@ -51,47 +89,5 @@
                 window.location.href = '@Url.Action("Index", "Home")';
             }
         });
-    
     };
-
-
-
 </script>
-
-
-
- @*    <script>
-        
-
-        $(document).ready(function () {
-            //  $("#accountSearch").autocomplete("enable")
-            //  var cuentas =  Convierte el JSON en una lista JS
-            // console.log(cuentas);
-            // $("#accountSearch").autocomplete({
-            //     source: cuentas.map(c => c.Nombre), // Usa solo los nombres de cuenta
-            //     minLength: 1
-
-                $("#accountSearch").autocomplete({
-                    source: function (request, response) {
-                        $.ajax({
-                    url: '@Url.Action("CuentaPorUsuarioController", "AsociarCuenta")',
-                            data: { "prefix": request.term },
-                            type: 'GET',
-                            success: function (data) {
-                                console.log(data);
-                                response($.map(data, function (cuenta) {
-                                    return {
-                                        Text: cuenta.Nombre,  // Nombre de la cuenta que aparece en la lista de autocompletado
-                                        value: cuenta.Nombre   // El valor es también el nombre, o podrías usar el Id si lo prefieres
-                                    };
-                                }));
-                            }
-                        });
-                    },
-            minLength: 1
-        });
-         });
-        </script> *@
-
-
-

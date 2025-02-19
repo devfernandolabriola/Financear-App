@@ -4,6 +4,7 @@
 }
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/currency.js"></script>
 
 @if (ViewBag.IsUserLoggedIn != null && ViewBag.IsUserLoggedIn) {
 	if (ViewBag.TieneCuentas) {
@@ -36,14 +37,26 @@
                     const values = group.map(item => item.Item2); // Valores totales
 
                     const matchedMoneda = monedas.filter(moneda => moneda.Id == key);
+                    console.log("matchedMoneda ",matchedMoneda)
                     const valorTotalMoneda = data.filter(t => t.Item1 == key);
                     const montoTotalMoneda = montoTotalXMoneda.filter(m => m.Key == key);
                     
                     console.log(montoTotalMoneda)
                     // Crear un título para este gráfico
+                    const dataMonedas = {};
+                    monedas.forEach(moneda => {
+                        dataMonedas[moneda.Id] = { locale: moneda.Locale, currency: moneda.Nombre };
+                    });
+
+                    let sumaMontoTotalMoneda = montoTotalMoneda[0].Sum;
+                    console.log("montoTotalMoneda[0] ", montoTotalMoneda[0])
+                    console.log("sumaMontoTotalMoneda ", sumaMontoTotalMoneda)
+
+                    let valueConverted = formatCurrency(sumaMontoTotalMoneda, matchedMoneda[0].Locale, matchedMoneda[0].Nombre);
+                    console.log("valueConverted ", valueConverted)
 
                     const title = document.createElement('h3');
-                    title.textContent = `${matchedMoneda[0].Nombre} - ${montoTotalMoneda[0].Sum}`;
+                    title.textContent = `${matchedMoneda[0].Nombre} - ${valueConverted}`;
                     title.style.textAlign = 'center';
                     container.appendChild(title);
 

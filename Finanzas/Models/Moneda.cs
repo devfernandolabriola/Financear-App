@@ -15,18 +15,20 @@ public partial class Moneda
 
     public string Nombre { get; set; } = null!;
 
+    public string Locale { get; set; } = null!;
     public Moneda ()
         {
 
         }
 
-    public Moneda(int id, string nombre)
+    public Moneda(int id, string nombre, string locale)
     {
         Id = id;
         Nombre = nombre;
+        Locale = locale;
     }
 
-    public List<Moneda> VerMonedas()
+    public static List<Moneda> VerMonedas()
     {
         FinanzasAppContext context = new FinanzasAppContext();
         var moneda = context.Monedas.ToList();

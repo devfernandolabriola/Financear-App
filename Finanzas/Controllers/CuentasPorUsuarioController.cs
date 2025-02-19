@@ -29,112 +29,46 @@ namespace Finanzas.Controllers
             return View();
         }
 
-        // GET: CuentasPorUsuarioController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: CuentasPorUsuarioController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: CuentasPorUsuarioController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CuentasPorUsuarioController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: CuentasPorUsuarioController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CuentasPorUsuarioController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CuentasPorUsuarioController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         public ActionResult AsociarCuenta() 
         {
             //Para un dropdownlist, creo una lista null, y usando el context de la base de datos creo el objeto moneda, y hago que la lista sea igual
             //a una lista de monedas llamando a una funcion de la clase moneda
-            List<Moneda> list = null;
+            List<Moneda> listMonedas = null;
             using (FinanzasAppContext context = new FinanzasAppContext())
             {
-                var moneda = new Moneda();
-                list = moneda.VerMonedas();
+                listMonedas = Moneda.VerMonedas();
 
-                List<SelectListItem> monedas = list.ConvertAll(c =>
+                List<SelectListItem> monedas = listMonedas.ConvertAll(c =>
                 {
                     return new SelectListItem()
                     {
                         Text = c.Nombre,
-                        Value = c.Nombre,
+                        Value = c.Id.ToString(),
                         Selected = false
                     };
                 });
-                ViewBag.Monedas = monedas;
+
+                ViewBag.Monedas = listMonedas;
+                ViewBag.ListItemMonedas = monedas;
                 return View();
                 
             }
         }
         [HttpPost]
-        public ActionResult VincularCuenta(string NombreCuenta, string moneda)
+        public ActionResult VincularCuenta(string NombreCuenta, string moneda, string MontoTotal)
         {
             Console.WriteLine($"NombreCuenta: {NombreCuenta}, Moneda: {moneda}");
-            var existe = Cuenta.BuscarCuentaId(_context, NombreCuenta);
-            if (existe == null) {
-                var agregado = Cuenta.AgregarCuenta(_context, NombreCuenta);
+            var cuentaId = Cuenta.BuscarCuentaId(_context, NombreCuenta);
+            if (cuentaId == null)
+            {
+                Cuenta.AgregarCuenta(_context, NombreCuenta);
+                cuentaId = Cuenta.BuscarCuentaId(_context, NombreCuenta);
             }
             var userid = HttpContext.Session.GetString("UsuarioId");
-            var cuentaId = Cuenta.BuscarCuentaId(_context, NombreCuenta);
-            var monedaId = Moneda.BuscarMoneda(_context, moneda);
-
-            var asociacion = CuentasPorUsuario.AgregarCuentaAUsuario(_context, Convert.ToInt32(userid), Convert.ToInt32(cuentaId), Convert.ToInt32(monedaId));
+            
+            if (string.IsNullOrEmpty(MontoTotal)) MontoTotal = "0";
+            
+            var asociacion = CuentasPorUsuario.AgregarCuentaAUsuario(_context, Convert.ToInt32(userid), Convert.ToInt32(cuentaId), Convert.ToInt32(moneda), MontoTotal);
 
             if (asociacion)
             {
