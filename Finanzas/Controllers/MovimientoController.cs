@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Finanzas.Controllers
 {
@@ -87,14 +88,18 @@ namespace Finanzas.Controllers
         public ActionResult AgregarMovimiento()
         {
             List<Categoria> listCategorias = new List<Categoria>();
-            List<CuentasPorUsuario> listCU = new List<CuentasPorUsuario>();
+            List<Moneda> listMonedas = null;
+            List<SelectListItem> cuentas = new List<SelectListItem>();
+            //List<CuentasPorUsuario> listCU = new List<CuentasPorUsuario>();
 
             using (FinanzasAppContext context = new FinanzasAppContext())
             {
                 //listmovimientos = Movimiento.VerMovimientos();
+                
                 listCategorias = Categoria.VerCategorias();
+                listMonedas = Moneda.VerMonedas();
                 var user = HttpContext.Session.GetString("UsuarioId");
-                listCU = CuentasPorUsuario.VerCuentasPorUsuario(Convert.ToInt32(user));
+                //listCU = CuentasPorUsuario.VerCuentasPorUsuario(Convert.ToInt32(user));
                 List<SelectListItem> categorias = listCategorias.ConvertAll(c =>
                 {
                     return new SelectListItem()
@@ -105,7 +110,44 @@ namespace Finanzas.Controllers
                     };
                 });
 
-                List<SelectListItem> cu = listCU.ConvertAll(c =>
+                List<SelectListItem> monedas = listMonedas.ConvertAll(c =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = c.Nombre,
+                        Value = c.Id.ToString(),
+                        Selected = false
+                    };
+                });
+
+                //List<SelectListItem> cu = listCU.ConvertAll(c =>
+                //{
+                //    return new SelectListItem()
+                //    {
+                //        Text = Cuenta.BuscarCuentaXNombre(context, c.IdCuenta),
+                //        Value = c.IdCuenta.ToString(),
+                //        Selected = false
+                //    };
+                //});
+                ViewBag.CU = cuentas;
+                ViewBag.SelectListMoneda = monedas;
+                ViewBag.Categorias = categorias;
+                ViewBag.Monedas = listMonedas;
+                //ViewBag.CU = cu;
+            }
+            return View();
+
+        }
+
+        public ActionResult BuscarCuentas(string moneda)
+        {
+            List<CuentasPorUsuario> listCU = new List<CuentasPorUsuario>();
+
+            using (FinanzasAppContext context = new FinanzasAppContext())
+            {
+                var userid = HttpContext.Session.GetString("UsuarioId");
+                listCU = CuentasPorUsuario.VerCuentasPorUsuario(Convert.ToInt32(userid),Convert.ToInt32(moneda));
+                List<SelectListItem> CU = listCU.ConvertAll(c =>
                 {
                     return new SelectListItem()
                     {
@@ -113,12 +155,11 @@ namespace Finanzas.Controllers
                         Value = c.IdCuenta.ToString(),
                         Selected = false
                     };
-                });
+                }).ToList();
 
-                ViewBag.Categorias = categorias;
-                ViewBag.CU = cu;
+                Console.WriteLine(CU.Count);
+                return Json(CU);
             }
-            return View();
 
         }
     }

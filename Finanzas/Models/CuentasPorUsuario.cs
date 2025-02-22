@@ -36,11 +36,11 @@ public partial class CuentasPorUsuario
         }
     }
 
-    public static List<CuentasPorUsuario> VerCuentasPorUsuario(int userId)
+    public static List<CuentasPorUsuario> VerCuentasPorUsuario(int userId, int monedaid)
     {
         FinanzasAppContext context = new FinanzasAppContext();
 
         //TODO: Retornar unicamente los nombres de las cunetas por usuario
-        return context.CuentasPorUsuarios.Where(x => x.IdUsuario == userId).ToList();
+        return context.CuentasPorUsuarios.Where(x => (x.IdUsuario == userId) && (x.IdMoneda == monedaid)).ToList();
     }
 }

@@ -45,7 +45,7 @@ namespace Finanzas.Controllers
         [Route("register")]
         //DTO = Data transfer object
         //DAO = Data access object
-        public IActionResult Register([FromBody] UsuarioDTO userDTO/*string Email*//*, string Nombre, string Clave*/)
+        public IActionResult Register([FromBody] UsuarioDTO userDTO)
         {
             try
             {

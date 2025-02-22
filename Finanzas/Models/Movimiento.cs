@@ -17,7 +17,7 @@ public partial class Movimiento
     public int IdCategoria { get; set; }
     public int IdCuentaXUsuario { get; set; }
 
-
+    public string Monto { get; set; }
     public List<Movimiento> VerMovimientos()
     {
         FinanzasAppContext context = new FinanzasAppContext();

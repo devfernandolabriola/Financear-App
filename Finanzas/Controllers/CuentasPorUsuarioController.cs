@@ -57,7 +57,6 @@ namespace Finanzas.Controllers
         [HttpPost]
         public ActionResult VincularCuenta(string NombreCuenta, string moneda, string MontoTotal)
         {
-            Console.WriteLine($"NombreCuenta: {NombreCuenta}, Moneda: {moneda}");
             var cuentaId = Cuenta.BuscarCuentaId(_context, NombreCuenta);
             if (cuentaId == null)
             {

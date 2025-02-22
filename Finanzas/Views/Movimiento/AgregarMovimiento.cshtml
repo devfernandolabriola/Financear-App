@@ -5,18 +5,109 @@
 @model Finanzas.Models.Movimiento
 @{
     List<SelectListItem> Categoria = (List<SelectListItem>)ViewBag.Categorias;
+    List<SelectListItem> Moneda = (List<SelectListItem>)ViewBag.SelectListMoneda;
     List<SelectListItem> CU = (List<SelectListItem>)ViewBag.CU;
-
+    var currencyFormatsJson = JsonConvert.SerializeObject(ViewBag.Monedas);
 }
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/currency.js"></script>
+
+
 <h1> Agregar Movimiento</h1>
+<label> Elige con que tipo de moneda vas a operar</label>
+<br />
+@Html.DropDownList("Moneda", Moneda, "Seleccione la Moneda", new { id = "listMonedas" })
+
+
 <label> Elige el Nombre </label>
-@Html.TextBoxFor(m => m.Nombre, new { @id = "NombreMovimiento", @placeholder = "Ejemplos: Papel Higienico, Compra supermercado, Gasto Hormiga" });
+@Html.TextBoxFor(m => m.Nombre, new { @id = "NombreMovimiento", @placeholder = "Ejemplos: Papel Higienico, Compra supermercado, Gasto Hormiga", @disabled="disabled"})
 
 @Html.DropDownList("TipoAccion",
         Html.GetEnumSelectList<TipoAccion>(),
-        "Seleccione tipo de movimiento", new { @class = "form-control" })
+            "Seleccione tipo de movimiento", new { @class = "form-control", @disabled = "disabled", @id="TipoMovimiento" })
 
-@Html.DropDownList("Categoria", Categoria, "Seleccione a que categoria pertenece el movimiento")
+@Html.DropDownList("Categoria", Categoria, "Seleccione a que categoria pertenece el movimiento", new { @disabled = "disabled", @id="Categoria" })
 
-@Html.DropDownList("CuentaPorUsuario", CU, "Seleccione la cuenta")
+@Html.DropDownList("CU",CU,"Seleccione la cuenta que quieres usar",new{@id="CUDropdown"})
+
+@Html.TextBoxFor(m => m.Monto, new { @id = "Monto", @placeholder = "Monto", @disabled = "disabled" })
+
+<input type="button" class="btn btn-info" value="Agregar Movimiento"/>
+
+
+
+<script>
+    $(document).ready(function () {
+        var rawValue = "";
+        const monedaSelect = document.getElementById("listMonedas");
+        var valorInput = document.getElementById("Monto");
+
+        const currencyFormats = {};
+        const monedas = @Html.Raw(currencyFormatsJson)
+
+            monedas.forEach(moneda => {
+                currencyFormats[moneda.Id] = { locale: moneda.Locale, currency: moneda.Nombre };
+            });
+
+        console.log(currencyFormats);
+
+        $('#listMonedas').on('change', function () {
+
+            let Moneda = $('#listMonedas').val()
+            const formatData = currencyFormats[Moneda] || currencyFormats["ARS"];
+
+
+            valorInput.addEventListener("input", function () {
+                rawValue = this.value.replace(/[^0-9.,]/g, "");
+            });
+
+            valorInput.addEventListener("blur", function () {
+                const Monedas = monedaSelect.value;
+                const numericValue = parseFloat(rawValue.replace(",", ".")) || 0;
+                this.value = formatCurrency(numericValue, formatData.locale, formatData.currency);
+            });
+
+            valorInput.addEventListener("focus", function () {
+                this.value = rawValue;
+            });
+
+
+
+            let MonedaData = new FormData();
+
+            MonedaData.append("moneda", Moneda);
+
+            $.ajax({
+                url: '@Url.Action("BuscarCuentas", "Movimiento")',
+                method: "POST",
+                data: MonedaData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var CUDropdown = $('#CUDropdown');
+                    var datos = "";
+                    CUDropdown.empty();
+                    $.each(data, function (index, cuenta) {
+                        console.log(cuenta);
+                        datos += '<option value="' + cuenta.value + '">' + cuenta.text + '</option>';
+                    });
+                    CUDropdown.append(datos);
+                    document.getElementById("NombreMovimiento").disabled = false;
+                    document.getElementById("TipoMovimiento").disabled = false;
+                    document.getElementById("Categoria").disabled = false;
+                    document.getElementById("Monto").disabled = false;
+                },
+                error: function (xhr, status, error) {
+                    console.error("Hubo un error: " + error);
+                }
+            });
+        });
+
+
+
+
+
+
+    });
+</script>
