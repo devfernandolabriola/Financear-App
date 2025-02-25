@@ -162,5 +162,33 @@ namespace Finanzas.Controllers
             }
 
         }
+
+        public ActionResult VincularMovimiento(string NombreMovimiento, string TipoAccion, string monedaId, string CuentaId, DateTime fecha, string CategoriaId, string Monto)
+        {
+            FinanzasAppContext context = new FinanzasAppContext();
+            var userid = HttpContext.Session.GetString("UsuarioId");
+            var CXUId = CuentasPorUsuario.BuscarCXUId(context, Convert.ToInt32(userid), Convert.ToInt32(CuentaId), Convert.ToInt32(monedaId));       
+
+            var Agregado = Movimiento.AgregarMovimiento(context, NombreMovimiento, Convert.ToInt32(TipoAccion), (int)CXUId, fecha, Monto, Convert.ToInt32(CategoriaId));
+
+            if (Agregado)
+            {
+                var Transaccion = CuentasPorUsuario.HacerMovimiento(context, (int)CXUId, Convert.ToInt32(TipoAccion), Monto);
+                if (Transaccion)
+                {
+                    return Ok(new { message = "Ok" });
+                }
+                else
+                {
+                    //Aca se ejecutaria un eliminar movimiento.
+                    return BadRequest("error");
+                }
+            }
+            else
+            {
+                return BadRequest("error");
+            }
+
+        }
     }
 }

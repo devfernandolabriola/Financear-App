@@ -29,11 +29,14 @@
 
 @Html.DropDownList("Categoria", Categoria, "Seleccione a que categoria pertenece el movimiento", new { @disabled = "disabled", @id="Categoria" })
 
-@Html.DropDownList("CU",CU,"Seleccione la cuenta que quieres usar",new{@id="CUDropdown"})
+@Html.DropDownList("CU", CU, "Seleccione la cuenta que quieres usar", new { @id = "CUDropdown", @disabled = "disabled" })
+
+
+<input id="startDate" class="form-control" type="date" disabled="disabled"/>
 
 @Html.TextBoxFor(m => m.Monto, new { @id = "Monto", @placeholder = "Monto", @disabled = "disabled" })
 
-<input type="button" class="btn btn-info" value="Agregar Movimiento"/>
+<input type="button" id="BotonMovimiento" class="btn btn-info" value="Agregar Movimiento" disabled="disabled" onclick="AgregarMovimiento()"/>
 
 
 
@@ -93,21 +96,72 @@
                         datos += '<option value="' + cuenta.value + '">' + cuenta.text + '</option>';
                     });
                     CUDropdown.append(datos);
+                    // Bug aca, añadir validacion por si deselecciona la moneda.
                     document.getElementById("NombreMovimiento").disabled = false;
                     document.getElementById("TipoMovimiento").disabled = false;
                     document.getElementById("Categoria").disabled = false;
                     document.getElementById("Monto").disabled = false;
+                    document.getElementById("BotonMovimiento").disabled = false;
+                    document.getElementById("startDate").disabled = false;
+                    document.getElementById("CUDropdown").disabled = false;
                 },
                 error: function (xhr, status, error) {
                     console.error("Hubo un error: " + error);
                 }
+            }); //Aca cierra el ajax
+        }); //Aca cierra el onchange
+
+        $('#BotonMovimiento').on('click', function () {
+
+            let Moneda = $('#listMonedas').val()
+            let NombreMovimiento = $('#NombreMovimiento').val()
+            let TipoMovimiento = $('#TipoMovimiento').val()
+            let Categoria = $('#Categoria').val()
+            let Cuenta = $('#CUDropdown').val()
+            let Fecha = $('#startDate').val()
+            let Monto = rawValue.trim()
+
+            let MovData = new FormData();
+
+            MovData.append("NombreMovimiento", NombreMovimiento)
+            MovData.append("TipoAccion", TipoMovimiento)
+            MovData.append("monedaId", Moneda)
+            MovData.append("CuentaId", Cuenta)
+            MovData.append("fecha", Fecha)
+            MovData.append("CategoriaId", Categoria)
+            MovData.append("Monto", Monto)
+
+            $.ajax({
+                url: '@Url.Action("VincularMovimiento", "Movimiento")',
+                method: 'POST',
+                data: MovData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    window.location.href = '@Url.Action("Index", "Home")';
+                }
+            });//Aca cierra el ajax de agregarmovimiento
+
+            const formatData = currencyFormats[Moneda] || currencyFormats["ARS"];
+
+
+            valorInput.addEventListener("input", function () {
+                rawValue = this.value.replace(/[^0-9.,]/g, "");
             });
+
+            valorInput.addEventListener("blur", function () {
+                const Monedas = monedaSelect.value;
+                const numericValue = parseFloat(rawValue.replace(",", ".")) || 0;
+                this.value = formatCurrency(numericValue, formatData.locale, formatData.currency);
+            });
+
+            valorInput.addEventListener("focus", function () {
+                this.value = rawValue;
+            });
+
+        }); //Aca cierra el agregarMovimiento
         });
 
-
-
-
-
-
-    });
 </script>
+
+

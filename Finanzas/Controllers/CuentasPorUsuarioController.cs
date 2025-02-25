@@ -47,7 +47,6 @@ namespace Finanzas.Controllers
                         Selected = false
                     };
                 });
-
                 ViewBag.Monedas = listMonedas;
                 ViewBag.ListItemMonedas = monedas;
                 return View();
@@ -55,19 +54,19 @@ namespace Finanzas.Controllers
             }
         }
         [HttpPost]
-        public ActionResult VincularCuenta(string NombreCuenta, string moneda, string MontoTotal)
+        public ActionResult VincularCuenta([FromForm] VincularCuentaXUsuarioDTO dto)
         {
-            var cuentaId = Cuenta.BuscarCuentaId(_context, NombreCuenta);
+            var cuentaId = Cuenta.BuscarCuentaId(_context, dto.NombreCuenta);
             if (cuentaId == null)
             {
-                Cuenta.AgregarCuenta(_context, NombreCuenta);
-                cuentaId = Cuenta.BuscarCuentaId(_context, NombreCuenta);
+                Cuenta.AgregarCuenta(_context, dto.NombreCuenta);
+                cuentaId = Cuenta.BuscarCuentaId(_context, dto.NombreCuenta);
             }
             var userid = HttpContext.Session.GetString("UsuarioId");
             
-            if (string.IsNullOrEmpty(MontoTotal)) MontoTotal = "0";
+            if (string.IsNullOrEmpty(dto.MontoTotal)) dto.MontoTotal = "0";
             
-            var asociacion = CuentasPorUsuario.AgregarCuentaAUsuario(_context, Convert.ToInt32(userid), Convert.ToInt32(cuentaId), Convert.ToInt32(moneda), MontoTotal);
+            var asociacion = CuentasPorUsuario.AgregarCuentaAUsuario(_context, Convert.ToInt32(userid), Convert.ToInt32(cuentaId), Convert.ToInt32(dto.Moneda), dto.MontoTotal);
 
             if (asociacion)
             {

@@ -36,11 +36,55 @@ public partial class CuentasPorUsuario
         }
     }
 
-    public static List<CuentasPorUsuario> VerCuentasPorUsuario(int userId, int monedaid)
+    public static List<CuentasPorUsuario> VerCuentasPorUsuario(int userId, int monedaId)
     {
         FinanzasAppContext context = new FinanzasAppContext();
 
         //TODO: Retornar unicamente los nombres de las cunetas por usuario
-        return context.CuentasPorUsuarios.Where(x => (x.IdUsuario == userId) && (x.IdMoneda == monedaid)).ToList();
+        return context.CuentasPorUsuarios.Where(x => (x.IdUsuario == userId) && (x.IdMoneda == monedaId)).ToList();
+    }
+
+    public static int? BuscarCXUId(FinanzasAppContext context, int userId, int cuentaId, int monedaId)
+    {
+        var CXUId = context.CuentasPorUsuarios.FirstOrDefault(c => (c.IdMoneda == monedaId) && (c.IdUsuario == userId) && (c.IdCuenta == cuentaId));
+        return CXUId.Id; 
+    }
+
+    public static bool HacerMovimiento(FinanzasAppContext context, int CXUId, int Accion, string Monto)
+    {
+        var DineroCuenta = context.CuentasPorUsuarios.FirstOrDefault(c => c.Id == CXUId).MontoTotal;
+
+        if(Accion == 1)
+        {
+            var DineroActual = Convert.ToInt32(DineroCuenta) + Convert.ToInt32(Monto);
+            try
+            {
+                context.Database.BeginTransaction();
+                context.Database.ExecuteSqlRaw($"Update CuentasPorUsuario SET MontoTotal = '{DineroActual.ToString()}' WHERE Id = {CXUId};");
+                context.Database.CommitTransaction();
+                return true;
+            }
+            catch (Exception)
+            {
+                context.Database.RollbackTransaction();
+                return false;
+
+            }
+        } else
+        {
+            var DineroActual = Convert.ToDouble(DineroCuenta) - Convert.ToDouble(Monto);
+            try
+            {
+                context.Database.BeginTransaction();
+                context.Database.ExecuteSqlRaw($"Update CuentasPorUsuario SET MontoTotal = '{DineroActual.ToString()}' WHERE Id = {CXUId};");
+                context.Database.CommitTransaction();
+                return true;
+            }
+            catch (Exception)
+            {
+                context.Database.RollbackTransaction();
+                return false;
+            }
+        }
     }
 }

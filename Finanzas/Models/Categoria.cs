@@ -17,4 +17,5 @@ public partial class Categoria
         var Categorias = context.Categorias.ToList();
         return Categorias;
     }
+
 }

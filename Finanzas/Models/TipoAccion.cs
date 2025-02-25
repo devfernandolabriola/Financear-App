@@ -5,7 +5,7 @@ namespace Finanzas.Models;
 
 public enum TipoAccion
 {
-    GASTO, INGRESO, TRANSFERENCIA 
+    GASTO, INGRESO, TRANSFERENCIA
 
 }
 
