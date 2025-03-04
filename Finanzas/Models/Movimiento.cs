@@ -43,4 +43,22 @@ public partial class Movimiento
 
         }
     }
+
+    public static bool EliminarMovimiento(FinanzasAppContext context, string NombreMovimiento, int TipoAccion, int CXUId, DateTime Fecha, string Monto, int CategoriaId)
+    {
+        try
+        {
+            context.Database.BeginTransaction();
+            context.Database.ExecuteSqlRaw($"Set DateFormat dmy;");
+            context.Database.ExecuteSqlRaw($"DELETE From Movimientos WHERE Nombre = '{NombreMovimiento}' AND TipoAccion = {TipoAccion} AND Fecha = '{Fecha}' AND IdCategoria = {CategoriaId} AND IdCXU = {CXUId} AND Monto = '{Monto}'; ");
+            context.Database.CommitTransaction();
+            return true;
+        }
+        catch (Exception)
+        {
+            context.Database.RollbackTransaction();
+            return false;
+
+        }
+    }
 }

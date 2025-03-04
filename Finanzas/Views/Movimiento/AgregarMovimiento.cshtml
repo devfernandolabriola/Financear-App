@@ -21,20 +21,20 @@
 
 
 <label> Elige el Nombre </label>
-@Html.TextBoxFor(m => m.Nombre, new { @id = "NombreMovimiento", @placeholder = "Ejemplos: Papel Higienico, Compra supermercado, Gasto Hormiga", @disabled="disabled"})
+@Html.TextBoxFor(m => m.Nombre, new { @id = "NombreMovimiento", @placeholder = "Ejemplos: Papel Higienico, Compra supermercado, Gasto Hormiga"})
 
 @Html.DropDownList("TipoAccion",
         Html.GetEnumSelectList<TipoAccion>(),
-            "Seleccione tipo de movimiento", new { @class = "form-control", @disabled = "disabled", @id="TipoMovimiento" })
+            "Seleccione tipo de movimiento", new { @class = "form-control",@id="TipoMovimiento" })
 
-@Html.DropDownList("Categoria", Categoria, "Seleccione a que categoria pertenece el movimiento", new { @disabled = "disabled", @id="Categoria" })
+@Html.DropDownList("Categoria", Categoria, "Seleccione a que categoria pertenece el movimiento", new { @id="Categoria" })
 
-@Html.DropDownList("CU", CU, "Seleccione la cuenta que quieres usar", new { @id = "CUDropdown", @disabled = "disabled" })
+@Html.DropDownList("CU", CU, "Seleccione la cuenta que quieres usar", new { @id = "CUDropdown", @style = "display:none" })
 
 
-<input id="startDate" class="form-control" type="date" disabled="disabled"/>
+<input id="startDate" class="form-control" type="date"/>
 
-@Html.TextBoxFor(m => m.Monto, new { @id = "Monto", @placeholder = "Monto", @disabled = "disabled" })
+@Html.TextBoxFor(m => m.Monto, new { @id = "Monto", @placeholder = "Monto" })
 
 <input type="button" id="BotonMovimiento" class="btn btn-info" value="Agregar Movimiento" disabled="disabled" onclick="AgregarMovimiento()"/>
 
@@ -97,13 +97,14 @@
                     });
                     CUDropdown.append(datos);
                     // Bug aca, añadir validacion por si deselecciona la moneda.
-                    document.getElementById("NombreMovimiento").disabled = false;
-                    document.getElementById("TipoMovimiento").disabled = false;
-                    document.getElementById("Categoria").disabled = false;
-                    document.getElementById("Monto").disabled = false;
-                    document.getElementById("BotonMovimiento").disabled = false;
-                    document.getElementById("startDate").disabled = false;
-                    document.getElementById("CUDropdown").disabled = false;
+                    console.log(CUDropdown.val())
+                    if (CUDropdown.val() != null) {
+                        document.getElementById("BotonMovimiento").disabled = false;
+                        document.getElementById("CUDropdown").style.display = "inline";
+                    } else {
+                        document.getElementById("BotonMovimiento").disabled = true;
+                        document.getElementById("CUDropdown").style.display = "none";
+                    };
                 },
                 error: function (xhr, status, error) {
                     console.error("Hubo un error: " + error);

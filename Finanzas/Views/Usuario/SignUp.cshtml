@@ -22,8 +22,7 @@
 </div>
 <div id="SignUpButton">
 
-<p id="CompletarDatos" style="color: red; display:none;">Todos los datos tienen que tener algun valor.</p>
- <p id="UsuarioMailExisten" style="color: red; display:none;">El correo o usuario ya existen.</p>
+<p id="MensajeError" style="color: red; display:none;">Todos los datos tienen que tener algun valor.</p>
 
 <br />
 
@@ -40,12 +39,17 @@
         let emailLimpio = email.replaceAll(' ', '');
 		let nombreLimpio = nombre.replaceAll(' ', '');
 		let claveLimpio = clave.replaceAll(' ', '');
-        if(emailLimpio == "" || nombreLimpio == "" || claveLimpio == ""){
-            if (document.getElementById("UsuarioMailExisten").style.display == "inline") {
-                document.getElementById("UsuarioMailExisten").style.display = "none"
-            }
-            document.getElementById("CompletarDatos").style.display = "inline";
 
+        let cantClave = claveLimpio.length;
+        if (cantClave < 8) {
+            document.getElementById("MensajeError").innerText = "La clave debe tener mas de 8 caracteres"
+            document.getElementById("MensajeError").style.display = "inline";
+            return;
+        }
+
+        if(emailLimpio == "" || nombreLimpio == "" || claveLimpio == ""){
+            document.getElementById("MensajeError").innerText = "Todos los campos deben tener un valor"
+            document.getElementById("MensajeError").style.display = "inline";
 			return;
 		}
 
@@ -60,10 +64,8 @@
                 window.location.href = '@Url.Action("Index", "Home")';
             },
             error: function (xhr,s,p) {
-                if (document.getElementById("CompletarDatos").style.display == "inline") {
-                    document.getElementById("CompletarDatos").style.display = "none"
-                }
-                document.getElementById("UsuarioMailExisten").style.display = "inline";
+                document.getElementById("MensajeError").innerText = "El nombre o el usuario ya existen"
+                document.getElementById("MensajeError").style.display = "inline"
             }
         });
     };

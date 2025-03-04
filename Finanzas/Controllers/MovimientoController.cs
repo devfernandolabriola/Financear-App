@@ -180,7 +180,7 @@ namespace Finanzas.Controllers
                 }
                 else
                 {
-                    //Aca se ejecutaria un eliminar movimiento.
+                    var Eliminado = Movimiento.EliminarMovimiento(context, NombreMovimiento, Convert.ToInt32(TipoAccion), (int)CXUId, fecha, Monto, Convert.ToInt32(CategoriaId));
                     return BadRequest("error");
                 }
             }
