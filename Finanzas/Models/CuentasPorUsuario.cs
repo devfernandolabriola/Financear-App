@@ -44,6 +44,14 @@ public partial class CuentasPorUsuario
         return context.CuentasPorUsuarios.Where(x => (x.IdUsuario == userId) && (x.IdMoneda == monedaId)).ToList();
     }
 
+    public static List<CuentasPorUsuario> VerCuentasPorUsuario(int userId)
+    {
+        FinanzasAppContext context = new FinanzasAppContext();
+
+        //TODO: Retornar unicamente los nombres de las cunetas por usuario
+        return context.CuentasPorUsuarios.Where(x => (x.IdUsuario == userId)).ToList();
+    }
+
     public static int? BuscarCXUId(FinanzasAppContext context, int userId, int cuentaId, int monedaId)
     {
         var CXUId = context.CuentasPorUsuarios.FirstOrDefault(c => (c.IdMoneda == monedaId) && (c.IdUsuario == userId) && (c.IdCuenta == cuentaId));

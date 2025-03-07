@@ -1,0 +1,27 @@
+﻿@{
+	var monedas = ViewBag.Monedas;
+	var movimientosUsuario = ViewBag.listMovimientos;
+	var listMovimientos = movimientosUsuario;
+}
+
+@foreach (var moneda in monedas)
+{
+	<h2 value="@moneda.Id">@moneda.Nombre</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Fecha</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var movimiento in listMovimientos)
+			{
+				<tr>
+					<td>@movimiento.Nombre</td>
+					<td>@movimiento.Fecha</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}

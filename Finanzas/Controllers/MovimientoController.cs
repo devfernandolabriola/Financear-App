@@ -120,23 +120,28 @@ namespace Finanzas.Controllers
                     };
                 });
 
-                //List<SelectListItem> cu = listCU.ConvertAll(c =>
-                //{
-                //    return new SelectListItem()
-                //    {
-                //        Text = Cuenta.BuscarCuentaXNombre(context, c.IdCuenta),
-                //        Value = c.IdCuenta.ToString(),
-                //        Selected = false
-                //    };
-                //});
                 ViewBag.CU = cuentas;
                 ViewBag.SelectListMoneda = monedas;
                 ViewBag.Categorias = categorias;
                 ViewBag.Monedas = listMonedas;
-                //ViewBag.CU = cu;
             }
             return View();
 
+        }
+
+        public ActionResult HistorialMovimientos()
+        {
+            List<Categoria> listCategorias = new List<Categoria>();
+            List<Moneda> listMonedas = null;
+            List<CuentasPorUsuario> listCU = new List<CuentasPorUsuario>();
+            var userid = HttpContext.Session.GetString("UsuarioId");
+            var listMovimientos = Movimiento.VerMovimientosUsuario(Convert.ToInt32(userid));
+            listMonedas = Moneda.VerMonedas();
+            
+            ViewBag.Monedas = listMonedas;
+            ViewBag.listMovimientos = listMovimientos;
+
+            return View();
         }
 
         public ActionResult BuscarCuentas(string moneda)

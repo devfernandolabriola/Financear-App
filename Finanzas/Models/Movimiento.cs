@@ -11,18 +11,30 @@ public partial class Movimiento
 
     public string Nombre { get; set; }
 
-    public TipoAccion EnumAccion { get; set; }
+    public TipoAccion TipoAccion { get; set; }
 
     public DateTime Fecha { get; set; }
 
     public int IdCategoria { get; set; }
-    public int IdCuentaXUsuario { get; set; }
+    public int IdCXU { get; set; }
 
     public string Monto { get; set; }
-    public List<Movimiento> VerMovimientos()
+    public static List<Movimiento> VerMovimientos()
     {
         FinanzasAppContext context = new FinanzasAppContext();
         var Movimientos = context.Movimientos.ToList();
+        return Movimientos;
+    }
+
+    public static List<Movimiento> VerMovimientosUsuario(int userId)
+    {
+        FinanzasAppContext context = new FinanzasAppContext();
+        var Movimientos = context.Movimientos
+            .Where(m => context.CuentasPorUsuarios
+                .Where(c => c.IdUsuario == userId)
+                .Select(c => c.Id)
+                .Contains(m.IdCXU))
+            .ToList();
         return Movimientos;
     }
 

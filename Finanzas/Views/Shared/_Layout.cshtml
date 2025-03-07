@@ -40,15 +40,15 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a  class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-light" id="navMov" style="display:none" asp-area="" asp-controller="Movimiento" asp-action="AgregarMovimiento">Agregar Movimiento</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" id="navMov" style="display:none" asp-area="" asp-controller="Movimiento" asp-action="AgregarMovimiento">Agregar Movimiento</a>
+                            <a class="nav-link text-light" id="navMovHist" style="display:none" asp-area="" asp-controller="Movimiento" asp-action="HistorialMovimientos">Historial de Movimientos</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" id="navSign" asp-area="" asp-controller="Usuario" asp-action="SignUp">SignUp</a>
+                            <a class="nav-link text-light" id="navSign" asp-area="" asp-controller="Usuario" asp-action="SignUp">Registrarse</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" id="navLog" asp-area="" asp-controller="Usuario" asp-action="Login">Iniciar sesion</a>
@@ -60,6 +60,7 @@
                                 document.getElementById("navSign").style.display = "none";
                                 document.getElementById("navLog").style.display = "none";
                                 document.getElementById("navMov").style.display = "block";
+                                document.getElementById("navMovHist").style.display = "block";
                             </script>
                             <div class="dropdown ms-1">
                                 <a id="username" class="nav-link dropdown-toggle text-light" role="button" data-bs-toggle="dropdown">@userName</a>
