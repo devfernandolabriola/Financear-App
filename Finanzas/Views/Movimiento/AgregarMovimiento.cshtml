@@ -15,6 +15,8 @@
 
 
 <h1> Agregar Movimiento</h1>
+<div class="alert alert-danger" id="error-alert" style="display:none"> </div>
+
 <label> Elige con que tipo de moneda vas a operar</label>
 <br />
 @Html.DropDownList("Moneda", Moneda, "Seleccione la Moneda", new { id = "listMonedas" })
@@ -32,7 +34,7 @@
 @Html.DropDownList("CU", CU, "Seleccione la cuenta que quieres usar", new { @id = "CUDropdown", @style = "display:none" })
 
 
-<input id="startDate" class="form-control" type="date"/>
+<input id="startDate" class="form-control" type="datetime-local"/>
 
 @Html.TextBoxFor(m => m.Monto, new { @id = "Monto", @placeholder = "Monto" })
 
@@ -140,9 +142,15 @@
                 processData: false,
                 success: function (data) {
                     window.location.href = '@Url.Action("Index", "Home")';
-                }
-            });//Aca cierra el ajax de agregarmovimiento
+                },
+                error: function (xhr, status, error) {
+                    $('#error-alert').text('ERROR. Asegúrese de rellenar TODOS los campos con los datos correspondientes.');
+                    $("#error-alert").show();
+                    //setTimeout(function() { $("#error-alert").hide(); }, 5000);
 
+                }});
+                
+                //Aca cierra el ajax de agregarmovimiento
             const formatData = currencyFormats[Moneda] || currencyFormats["ARS"];
 
 

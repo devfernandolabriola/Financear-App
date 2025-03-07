@@ -35,10 +35,14 @@ public partial class Moneda
         return moneda;
     }
 
-    public static int? BuscarMoneda(FinanzasAppContext context, string moneda)
+    public static Moneda GetMonedaXId(int moneda)
     {
-        var resultado = context.Monedas
-                        .FirstOrDefault(m => EF.Functions.Like(m.Nombre, moneda));
-        return resultado?.Id;
+        FinanzasAppContext context = new FinanzasAppContext();
+        return context.Monedas.FirstOrDefault(m => m.Id == moneda);
+    }
+    public static Moneda GetMonedaXNombre(string moneda)
+    {
+        FinanzasAppContext context = new FinanzasAppContext();
+        return context.Monedas.FirstOrDefault(m => EF.Functions.Like(m.Nombre, moneda));
     }
 }

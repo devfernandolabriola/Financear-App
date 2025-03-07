@@ -18,4 +18,11 @@ public partial class Categoria
         return Categorias;
     }
 
+    public static Categoria VerCategoria(int id)
+    {
+        FinanzasAppContext context = new FinanzasAppContext();
+        var Categoria = context.Categorias.Find(id);
+        return Categoria;
+    }
+
 }

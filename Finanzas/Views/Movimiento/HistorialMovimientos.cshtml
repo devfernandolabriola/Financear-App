@@ -2,25 +2,89 @@
 	var monedas = ViewBag.Monedas;
 	var movimientosUsuario = ViewBag.listMovimientos;
 	var listMovimientos = movimientosUsuario;
+	var movimientoMoneda = ViewBag.MonedaAgregada;
 }
+<script src="/js/currency.js"></script>
 
+<style>
+	#movimientos {
+		font-family: Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+		#movimientos td, #movimientos th {
+			border: 1px solid #ddd;
+			padding: 8px;
+		}
+
+		#movimientos tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		#movimientos tr:hover {
+			background-color: #ddd;
+		}
+
+		#movimientos th {
+			padding-top: 12px;
+			padding-bottom: 12px;
+			text-align: left;
+			background-color: #04AA6D;
+			color: white;
+		}
+</style>
 @foreach (var moneda in monedas)
 {
 	<h2 value="@moneda.Id">@moneda.Nombre</h2>
-	<table>
+	<table id="movimientos">
 		<thead>
 			<tr>
 				<th>Nombre</th>
+				<th>Tipo de movimiento</th>
 				<th>Fecha</th>
+				<th>Categoria</th>
+				<th>Cuenta</th>
+				<th>Monto</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var movimiento in listMovimientos)
+			@foreach (var movimiento in movimientoMoneda)
 			{
-				<tr>
-					<td>@movimiento.Nombre</td>
-					<td>@movimiento.Fecha</td>
-				</tr>
+				if (moneda.Id == movimiento.Moneda.Id)
+				{
+					<tr>
+						<td>@movimiento.Nombre</td>
+						@if(movimiento.TipoAccion == TipoAccion.GASTO) {
+							<td style="background-color: #F4C7C3; color:red;">@Enum.GetName(typeof(TipoAccion), movimiento.TipoAccion)</td>
+						}
+						@if (movimiento.TipoAccion == TipoAccion.INGRESO)
+						{
+							<td style="background-color: #B7E1CD; color:green;">@Enum.GetName(typeof(TipoAccion), movimiento.TipoAccion)</td>
+						}
+						@if (movimiento.TipoAccion == TipoAccion.TRANSFERENCIA)
+						{
+							<td style="background-color: darkgrey;">@Enum.GetName(typeof(TipoAccion), movimiento.TipoAccion)</td>
+						}
+						<td>@movimiento.Fecha</td>
+						<td>@movimiento.Categoria</td>
+						<td>@movimiento.Cuenta</td>
+
+						<td id="moneda-@movimiento.Id">
+							<script>
+								var monto = @movimiento.Monto;
+								var locale = '@movimiento.Moneda.Locale';
+								var nombre = '@movimiento.Moneda.Nombre';
+								console.log(monto, locale, nombre)
+								var montoFormat = formatCurrency(@movimiento.Monto, locale, nombre);
+								console.log(montoFormat)
+								document.getElementById('moneda-@movimiento.Id').innerHTML = montoFormat
+							</script>
+
+						</td>
+
+					</tr>
+				}
 			}
 		</tbody>
 	</table>

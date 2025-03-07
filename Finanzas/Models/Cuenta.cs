@@ -23,8 +23,9 @@ public partial class Cuenta
         }
         return Cuenta.Id;
     }
-    public static string BuscarCuentaXNombre(FinanzasAppContext context, int idCuenta)
+    public static string BuscarCuentaXNombre(int idCuenta)
     {
+        FinanzasAppContext context = new FinanzasAppContext();
         return context.Cuentas.FirstOrDefault(c => c.Id == idCuenta).Nombre;
     }
 

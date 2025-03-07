@@ -131,15 +131,29 @@ namespace Finanzas.Controllers
 
         public ActionResult HistorialMovimientos()
         {
-            List<Categoria> listCategorias = new List<Categoria>();
-            List<Moneda> listMonedas = null;
-            List<CuentasPorUsuario> listCU = new List<CuentasPorUsuario>();
-            var userid = HttpContext.Session.GetString("UsuarioId");
-            var listMovimientos = Movimiento.VerMovimientosUsuario(Convert.ToInt32(userid));
-            listMonedas = Moneda.VerMonedas();
-            
+            var userid = Convert.ToInt32(HttpContext.Session.GetString("UsuarioId"));
+
+            var listMovimientos = Movimiento.VerMovimientosUsuario(userid);
+            var listCU = CuentasPorUsuario.VerCuentasPorUsuario(userid);
+            var listMonedas = Moneda.VerMonedas();
+
+            var movimientosConMoneda = listMovimientos.Select(mov => new
+            {
+                mov.Id,
+                mov.Nombre,
+                mov.TipoAccion,
+                mov.Fecha,
+                Categoria = Categoria.VerCategoria(mov.IdCategoria).Nombre,
+                Cuenta = Cuenta.BuscarCuentaXNombre(CuentasPorUsuario.GetCuentasPorUsuario(mov.IdCXU).IdCuenta),
+                mov.Monto,
+                Moneda = Moneda.GetMonedaXId(listCU.FirstOrDefault(cu => cu.Id == mov.IdCXU)?.IdMoneda ?? 0) // Add IdMoneda
+            }).OrderByDescending(x => x.Id).ToList();
+
+
             ViewBag.Monedas = listMonedas;
             ViewBag.listMovimientos = listMovimientos;
+            ViewBag.MonedaAgregada = movimientosConMoneda;
+
 
             return View();
         }
@@ -156,7 +170,7 @@ namespace Finanzas.Controllers
                 {
                     return new SelectListItem()
                     {
-                        Text = Cuenta.BuscarCuentaXNombre(context, c.IdCuenta),
+                        Text = Cuenta.BuscarCuentaXNombre(c.IdCuenta),
                         Value = c.IdCuenta.ToString(),
                         Selected = false
                     };
