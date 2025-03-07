@@ -56,7 +56,7 @@ public partial class CuentasPorUsuario
 
         if(Accion == 1)
         {
-            var DineroActual = Convert.ToInt32(DineroCuenta) + Convert.ToInt32(Monto);
+            var DineroActual = Convert.ToDouble(DineroCuenta) + Convert.ToDouble(Monto);
             try
             {
                 context.Database.BeginTransaction();

@@ -1,25 +1,35 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 
 }
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/currency.js"></script>
 <script src="/js/graph.js"></script>
-
+<style>
+	.hidden-content {
+		visibility: hidden;
+	}
+	body {
+		height: 100% !important;
+		overflow-y: scroll !important; 
+		
+	}
+</style>
 @if (ViewBag.IsUserLoggedIn != null && ViewBag.IsUserLoggedIn) {
 	if (ViewBag.TieneCuentas) {
-        <div id="chartsContainer" style="width: 40%; margin: auto;"></div>
-        
-        <script>
-            $(document).ready(function () {
+		<div id="chartsContainer" class="hidden-content" style="width: 30%; margin: auto;"></div>
+
+		<script>
                 // Datos desde el servidor
                 const data = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.MontosPorMoneda));
                 const monedas = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.NombreMonedas));
                 const montoTotalXMoneda = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.MontoTotalXMoneda));
 				generarGrafico(data,monedas,montoTotalXMoneda);
 
-            });
+				document.addEventListener("DOMContentLoaded", function() {
+					document.getElementById('chartsContainer').classList.remove('hidden-content');
+				});
         </script>
 
 

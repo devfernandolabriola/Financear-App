@@ -44,8 +44,10 @@
         const canvas = document.createElement('canvas');
         canvas.id = `chart-${key}`;
         canvas.style.marginBottom = '40px';
+
         container.appendChild(canvas);
 
+        let randomColor = Math.floor(Math.random() * colors.length);
         // Crear el gráfico
         const ctx = canvas.getContext('2d');
         new Chart(ctx, {
@@ -64,7 +66,7 @@
                     tooltip: {
                         callbacks: {
                             label: function (tooltipItem) {
-                                return values[tooltipItem.dataIndex];
+                                return formatCurrency(values[tooltipItem.dataIndex], matchedMoneda[0].Locale, matchedMoneda[0].Nombre);
                             }
                         }
                     }
