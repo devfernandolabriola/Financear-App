@@ -146,8 +146,9 @@ namespace Finanzas.Controllers
                 Categoria = Categoria.VerCategoria(mov.IdCategoria).Nombre,
                 Cuenta = Cuenta.BuscarCuentaXNombre(CuentasPorUsuario.GetCuentasPorUsuario(mov.IdCXU).IdCuenta),
                 mov.Monto,
+                mov.ValorTotalActual,
                 Moneda = Moneda.GetMonedaXId(listCU.FirstOrDefault(cu => cu.Id == mov.IdCXU)?.IdMoneda ?? 0) // Add IdMoneda
-            }).OrderByDescending(x => x.Id).ToList();
+            }).OrderByDescending(x => x.Fecha).ToList();
 
 
             ViewBag.Monedas = listMonedas;

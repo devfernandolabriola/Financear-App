@@ -19,6 +19,7 @@ public partial class Movimiento
     public int IdCXU { get; set; }
 
     public string Monto { get; set; }
+    public string ValorTotalActual { get; set; }
     public static List<Movimiento> VerMovimientos()
     {
         FinanzasAppContext context = new FinanzasAppContext();
@@ -40,11 +41,12 @@ public partial class Movimiento
 
     public static bool AgregarMovimiento(FinanzasAppContext context, string NombreMovimiento, int TipoAccion, int CXUId, DateTime Fecha, string Monto, int CategoriaId)
     {
+        var DineroCuenta = context.CuentasPorUsuarios.FirstOrDefault(c => c.Id == CXUId).MontoTotal;
         try
         {
             context.Database.BeginTransaction();
             context.Database.ExecuteSqlRaw($"Set DateFormat dmy;");
-            context.Database.ExecuteSqlRaw($"insert into Movimientos (Nombre, TipoAccion, Fecha, IdCategoria, IdCXU, Monto) VALUES ('{NombreMovimiento}','{TipoAccion}','{Fecha}','{CategoriaId}','{CXUId}','{Monto}');");
+            context.Database.ExecuteSqlRaw($"insert into Movimientos (Nombre, TipoAccion, Fecha, IdCategoria, IdCXU, Monto, ValorTotalActual) VALUES ('{NombreMovimiento}','{TipoAccion}','{Fecha}','{CategoriaId}','{CXUId}','{Monto}', {DineroCuenta});");
             context.Database.CommitTransaction();
             return true;
         }

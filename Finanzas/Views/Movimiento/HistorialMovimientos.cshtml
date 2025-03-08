@@ -46,6 +46,7 @@
 				<th>Categoria</th>
 				<th>Cuenta</th>
 				<th>Monto</th>
+				<th>Total Actualizado</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -75,10 +76,17 @@
 								var monto = @movimiento.Monto;
 								var locale = '@movimiento.Moneda.Locale';
 								var nombre = '@movimiento.Moneda.Nombre';
-								console.log(monto, locale, nombre)
-								var montoFormat = formatCurrency(@movimiento.Monto, locale, nombre);
+								var montoFormat = formatCurrency(monto, locale, nombre);
 								console.log(montoFormat)
 								document.getElementById('moneda-@movimiento.Id').innerHTML = montoFormat
+							</script>
+
+						</td>
+						<td id="valorAct-@movimiento.Id">
+							<script>
+								var valorAct = @movimiento.ValorTotalActual;
+								var valorActFormat = formatCurrency(valorAct, locale, nombre);
+								document.getElementById('valorAct-@movimiento.Id').innerHTML = valorActFormat
 							</script>
 
 						</td>
