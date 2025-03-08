@@ -25,33 +25,40 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Finanzas.styles.css" asp-append-version="true" />
 </head>
+
+<style>
+    body{
+        height: 100% !important;
+        overflow-y: scroll !important;
+    }
+</style>
 <body id="body">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-secondary border-bottom box-shadow mb-3">
-            <div  class="container-fluid">
+        <nav id="Layout" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3 ">
+            <div class="container-fluid">
                 <a class="navbar-brand text-light" asp-controller="Home" asp-action="Index">Finanzas</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between text-success">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-success" asp-area="" asp-controller="Home" asp-action="Index"><strong>Home</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" id="navMov" style="display:none" asp-area="" asp-controller="Movimiento" asp-action="AgregarMovimiento">Agregar Movimiento</a>
+                            <a class="nav-link text-success" id="navMov" style="display:none" asp-area="" asp-controller="Movimiento" asp-action="AgregarMovimiento"><strong>Agregar Movimiento</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" id="navMovHist" style="display:none" asp-area="" asp-controller="Movimiento" asp-action="HistorialMovimientos">Historial de Movimientos</a>
+                            <a class="nav-link text-success" id="navMovHist" style="display:none" asp-area="" asp-controller="Movimiento" asp-action="HistorialMovimientos"><strong>Historial de Movimientos</strong></a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" id="navSign" asp-area="" asp-controller="Usuario" asp-action="SignUp">Registrarse</a>
+                            <a class="nav-link text-success" id="navSign" asp-area="" asp-controller="Usuario" asp-action="SignUp"><strong>Registrarse</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" id="navLog" asp-area="" asp-controller="Usuario" asp-action="Login">Iniciar sesion</a>
+                            <a class="nav-link text-success" id="navLog" asp-area="" asp-controller="Usuario" asp-action="Login"><strong>Iniciar sesion</strong></a>
                         </li>
 
                         @if (isUserLoggedIn)
@@ -65,8 +72,8 @@
                             <div class="dropdown ms-1">
                                 <a id="username" class="nav-link dropdown-toggle text-light" role="button" data-bs-toggle="dropdown">@userName</a>
                                     <ul class="dropdown-menu dropdown-menu-end bg-secondary">
-                                    <li><a id="DropdownLoginMenu" class="dropdown-item text-light" asp-area="" asp-controller="CuentasPorUsuario" asp-action="AsociarCuenta">Asociar Cuenta</a></li>
-                                    <li><a id="DropdownLoginMenu" class="dropdown-item text-light" asp-area="" asp-controller="Usuario" asp-action="Logout">Logout</a></li>
+                                    <li><a id="DropdownLoginMenu" class="dropdown-item text-light" asp-area="" asp-controller="CuentasPorUsuario" asp-action="AsociarCuenta"><strong>Asociar Cuenta</strong></a></li>
+                                    <li><a id="DropdownLoginMenu" class="dropdown-item text-light" asp-area="" asp-controller="Usuario" asp-action="Logout"><strong>Logout</strong></a></li>
 							        </ul>
                             </div>
                         }

@@ -1,19 +1,18 @@
 ﻿@model Finanzas.DTO.UsuarioDTO
-
+<div id="Register">
+    <br />
 <div class="input-group" id="Tbx">
     <div class="input-group-prepend">
         <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
     </div>
     @Html.TextBoxFor(u => u.Email, new { @id = "Email", @placeholder = "Email", @Class = "TextSign" })
 </div>
-<br />
 <div class="input-group" id="Tbx">
     <div class="input-group-prepend">
         <span class="input-group-text"><i class="bi bi-person"></i></span>
     </div>
     @Html.TextBoxFor(u => u.Nombre, new { @id = "Nombre", @placeholder = "Nombre", @Class = "TextSign" })
 </div>
-<br />
 <div class="input-group" id="Tbx">
     <div class="input-group-prepend">
         <span class="input-group-text"><i class="bi bi-key"></i></span>
@@ -21,13 +20,12 @@
     @Html.PasswordFor(u => u.Clave, new { @id = "Clave", @placeholder = "Clave", @minLength = "8", @Class = "TextSign" })
 </div>
 <div id="SignUpButton">
-
-<p id="MensajeError" style="color: red; display:none;">Todos los datos tienen que tener algun valor.</p>
-
-<br />
-
-<input type="button" class="btn btn-success" onclick="register()" name="SignUpButton" id="SignUpButton" value="Registrarse" />
-
+  
+<p id="MensajeError" style="color: red; display:none; padding:17px;">Todos los datos tienen que tener algun valor.</p>
+        <div style="padding:17px;">
+            <input type="button" class="btn btn-success" onclick="register()" name="SignUpButton" id="SignUpButton" value="Registrarse" />
+        </div>
+</div>
 </div>
 <script>
 
@@ -64,7 +62,7 @@
                 window.location.href = '@Url.Action("Index", "Home")';
             },
             error: function (xhr,s,p) {
-                document.getElementById("MensajeError").innerText = "El nombre o el usuario ya existen"
+                document.getElementById("MensajeError").innerText = "El nombre o el correo ya existen"
                 document.getElementById("MensajeError").style.display = "inline"
             }
         });

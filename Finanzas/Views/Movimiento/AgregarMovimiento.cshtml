@@ -17,7 +17,8 @@
 <h1> Agregar Movimiento</h1>
 <div class="alert alert-danger" id="error-alert" style="display:none"> </div>
 
-<label> Elige con que tipo de moneda vas a operar</label>
+<div>
+
 <br />
 @Html.DropDownList("Moneda", Moneda, "Seleccione la Moneda", new { id = "listMonedas" })
 
@@ -40,7 +41,7 @@
 
 <input type="button" id="BotonMovimiento" class="btn btn-info" value="Agregar Movimiento" disabled="disabled"/>
 
-
+</div>
 
 <script>
     $(document).ready(function () {
