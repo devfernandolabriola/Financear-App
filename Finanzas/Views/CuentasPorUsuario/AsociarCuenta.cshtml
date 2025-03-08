@@ -13,21 +13,30 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="/js/currency.js"></script>
 
-@Html.DropDownList("monedas",Monedas,"Seleccione la moneda",new {@class="form-control", @id="Moneda"})
 
+<h2 style="justify-content:center; text-align:center; color:lightgreen;"><strong>Asociar Cuenta</strong></h2>
+<div id="AsociarCuenta">
+    <br />
+    <div id="AsCuentaItem">
+@Html.DropDownList("monedas",Monedas,"Seleccione la moneda",new {@class="form-control", @id="Moneda"})
+    </div>
 
 @* @Html.TextBoxFor(c => c.,new{@id="Cuenta",@placeholder="Ingrese Cuenta"})
  *@
-
-<input id="Cuenta" name="Cuenta" placeholder="Ingrese cuenta" />
-
-@Html.TextBoxFor(c => c.MontoTotal, new { @id = "MontoTotal", @placeholder = "Ingrese monto" })
-
-<p id="CuentaVacio" style="color: red; display:none;">Ningun campo debe quedar vacio</p>
-
-<input type="button" onclick="SearchAccount()" value="Asociar cuenta"/>
-
-
+    <div id="AsCuentaItem">
+<input id="Cuenta" name="Cuenta" placeholder="Ingrese cuenta, ej: ICBC" style="width:100%"; />
+    </div>
+    <div id="AsCuentaItem">
+@Html.TextBoxFor(c => c.MontoTotal, new { @id = "MontoTotal", @placeholder = "Ingrese monto de la cuenta", @style="width:100%;" })
+    </div>
+    <div id="AsCuentaButton">
+<p id="CuentaVacio" style="color: red; display:none; padding:17px;">Ningun campo debe quedar vacio</p>
+    
+    <div style="padding:17px;">
+<input type="button" onclick="SearchAccount()" class="btn btn-info" value="Asociar cuenta"/>
+    </div>
+    </div>
+</div>
 
 <script>
     var rawValue = "";

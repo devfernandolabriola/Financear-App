@@ -8,7 +8,6 @@
 
 html {
     font-size: 14px;
-
 }
 
 @media (min-width: 768px) {
@@ -24,7 +23,10 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    /*    background-image: url('https://cdn.discordapp.com/attachments/1020182827964317728/1347735638102900846/New_Project.png?ex=67cce81f&is=67cb969f&hm=0de040939a2dd880d95a11b39f06a5ba2e2e333296ca4bfa3a96cdb2311cfabe&')*/
+    background: radial-gradient(#02471d, #181a1c);
+    color:white;
 }
 
 .ui-autocomplete {
@@ -50,20 +52,42 @@ body {
         .ui-autocomplete li:hover {
             background-color: #f4f4f4;
         }
-#Tbx {
+#Tbx,#AsCuentaItem {
+    justify-content: center;
+    text-align: center;
+    padding:17px;
+}
+
+#SignUpButton, #LoginButton, #AsCuentaButton {
     justify-content: center;
     text-align: center;
 }
 
-#SignUpButton {
-    justify-content:center;
-    text-align:center;
-}
-#LoginButton {
-    justify-content:center;
-    text-align:center;
-}
 
 .dropdown-item:hover {
     background-color:gray;
+}
+
+
+#Login,#Register,#AsociarCuenta {
+    border: solid;
+/*    height: 300px;*/
+    width: 350px;
+    background-color: rgb(33, 28, 28);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius:15px;
+}
+footer {
+    background-color: rgb(33, 28, 28);
+    color:white;
+}
+
+#Layout {
+    background-color: rgb(33, 28, 28) !important;
 }
