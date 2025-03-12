@@ -108,7 +108,7 @@ namespace Finanzas.Controllers
                         Value = c.Id.ToString(),
                         Selected = false
                     };
-                });
+                }).OrderBy(x => x.Text).ToList();
 
                 List<SelectListItem> monedas = listMonedas.ConvertAll(c =>
                 {
