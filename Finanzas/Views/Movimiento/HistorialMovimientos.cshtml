@@ -94,6 +94,38 @@
 							</script>
 
 						</td>
+						<td style="background-color:red;">
+							<button style="color: white; background: transparent; border: none;" onclick="EliminarMovimiento(@movimiento.Id,'@movimiento.Nombre')">
+								<i class="bi bi-trash3"></i>
+							</button>
+
+							<script>
+								function EliminarMovimiento(movimientoId,movimientoNombre) {
+									let confirmacion = confirm("¿Esta seguro de eliminar el movimiento " + movimientoNombre +"?")
+
+									if (confirmacion) {
+										let formData = new FormData();
+
+										formData.append("MovimientoId", movimientoId)
+
+
+
+										$.ajax({
+											url: '@Url.Action("EliminarMovimiento", "Movimiento")',
+											method: "Post",
+											data: formData,
+											contentType: false,
+											processData: false,
+											success: function (data) {
+												window.location.href = '@Url.Action("HistorialMovimientos", "Movimiento")';
+											}
+										});
+									};
+
+								};
+							</script>
+
+						</td>
 
 					</tr>
 				}
@@ -101,3 +133,4 @@
 		</tbody>
 	</table>
 }
+

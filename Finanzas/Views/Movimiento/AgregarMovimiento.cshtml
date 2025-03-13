@@ -13,35 +13,59 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/currency.js"></script>
 
+<style>
+    body {
+        height: 100% !important;
+        overflow-y: scroll !important;
+    }
+</style>
 
-<h1> Agregar Movimiento</h1>
-<div class="alert alert-danger" id="error-alert" style="display:none"> </div>
+<body>
+    <h1 style="justify-content:center; text-align:center; margin-bottom:20px;"><strong>Agregar Movimiento</strong></h1>
+<div class="alert alert-danger" id="error-alert" style="display:none;"> </div>
 
-<div>
+<div style="display:flex; justify-content:center;">
 
+    <div id="AgregarMovimiento">
 <br />
-@Html.DropDownList("Moneda", Moneda, "Seleccione la Moneda", new { id = "listMonedas" })
+<div id="AgMovimientoItem">
+@Html.DropDownList("Moneda", Moneda, "Seleccione la Moneda", new { @id = "listMonedas", @style="width:100%; text-align:center;" })
+    </div>
 
+    <div id="AgMovimientoItem">
+@Html.TextBoxFor(m => m.Nombre, new { @id = "NombreMovimiento", @placeholder = "Nombre de Movimiento, ej: Papel higienico, Cine", @style="width:100%; text-align:center;"})
+    </div>
 
-<label> Elige el Nombre </label>
-@Html.TextBoxFor(m => m.Nombre, new { @id = "NombreMovimiento", @placeholder = "Ejemplos: Papel Higienico, Compra supermercado, Gasto Hormiga"})
-
+    <div id="AgMovimientoItem">
 @Html.DropDownList("TipoAccion",
         Html.GetEnumSelectList<TipoAccion>(),
-            "Seleccione tipo de movimiento", new { @class = "form-control",@id="TipoMovimiento" })
+            "Seleccione tipo de movimiento", new { @class = "form-control",@id="TipoMovimiento", @style="width:100%; text-align:center;" })
+    </div>
 
-@Html.DropDownList("Categoria", Categoria, "Seleccione a que categoria pertenece el movimiento", new { @id="Categoria" })
+    <div id="AgMovimientoItem">
+@Html.DropDownList("Categoria", Categoria, "Seleccione la categoria", new { @id="Categoria", @style="width:100%; text-align:center;" })
+    </div>
 
-@Html.DropDownList("CU", CU, "Seleccione la cuenta que quieres usar", new { @id = "CUDropdown", @style = "display:none" })
+    <div id="DropdownCuentasAg" style="display:none;">
+    @Html.DropDownList("CU", CU, "Seleccione la cuenta que quieres usar", new { @id = "CUDropdown", @style = "width:100%; text-align:center;" })
+    </div>
+    <div id="AgMovimientoItem">
 
-
-<input id="startDate" class="form-control" type="datetime-local"/>
-
-@Html.TextBoxFor(m => m.Monto, new { @id = "Monto", @placeholder = "Monto" })
-
+<input id="startDate" class="form-control" type="datetime-local" style="width:100%; text-align:center;"/>
+    </div>
+    <div id="AgMovimientoItem">
+@Html.TextBoxFor(m => m.Monto, new { @id = "Monto", @placeholder = "Monto", @style="width:100%; text-align:center;" })
+  </div>
+    <div id="AgMovimientoItem">
 <input type="button" id="BotonMovimiento" class="btn btn-info" value="Agregar Movimiento" disabled="disabled"/>
+    </div>
+</div>
+
 
 </div>
+</body>
+
+
 
 <script>
     $(document).ready(function () {
@@ -103,10 +127,10 @@
                     console.log(CUDropdown.val())
                     if (CUDropdown.val() != null) {
                         document.getElementById("BotonMovimiento").disabled = false;
-                        document.getElementById("CUDropdown").style.display = "inline";
+                        document.getElementById("DropdownCuentasAg").style.display = "block";
                     } else {
                         document.getElementById("BotonMovimiento").disabled = true;
-                        document.getElementById("CUDropdown").style.display = "none";
+                        document.getElementById("DropdownCuentasAg").style.display = "none";
                     };
                 },
                 error: function (xhr, status, error) {

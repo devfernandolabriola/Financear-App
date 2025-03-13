@@ -210,5 +210,21 @@ namespace Finanzas.Controllers
             }
 
         }
+
+        public ActionResult EliminarMovimiento(int MovimientoId)
+        {
+			FinanzasAppContext context = new FinanzasAppContext();
+            var Eliminado = Movimiento.EliminarDeHistorial(context, MovimientoId);
+
+            if(Eliminado)
+            {
+                return Ok(new { message = "Ok" });
+            }
+            else
+            {
+                return BadRequest("error");
+            }
+		}
+
     }
 }

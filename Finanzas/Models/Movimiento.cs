@@ -46,7 +46,7 @@ public partial class Movimiento
         {
             context.Database.BeginTransaction();
             context.Database.ExecuteSqlRaw($"Set DateFormat dmy;");
-            context.Database.ExecuteSqlRaw($"insert into Movimientos (Nombre, TipoAccion, Fecha, IdCategoria, IdCXU, Monto, ValorTotalActual) VALUES ('{NombreMovimiento}','{TipoAccion}','{Fecha}','{CategoriaId}','{CXUId}','{Monto}', {DineroCuenta});");
+            context.Database.ExecuteSqlRaw($"insert into Movimientos (Nombre, TipoAccion, Fecha, IdCategoria, IdCXU, Monto, ValorTotalActual) VALUES ('{NombreMovimiento}','{TipoAccion}','{Fecha}','{CategoriaId}','{CXUId}','{Monto}', '{DineroCuenta}');");
             context.Database.CommitTransaction();
             return true;
         }
@@ -70,9 +70,27 @@ public partial class Movimiento
         }
         catch (Exception)
         {
-            context.Database.RollbackTransaction();
-            return false;
+			context.Database.RollbackTransaction();
+			return false;
 
+		}
+    }
+
+    public static bool EliminarDeHistorial(FinanzasAppContext context, int MovimientoId)
+    {
+        try
+        {
+			context.Database.BeginTransaction();
+			context.Database.ExecuteSqlRaw($"Delete From Movimientos WHERE Id ={MovimientoId}");
+			context.Database.CommitTransaction();
+            return true;
+
+		}
+        catch (Exception)
+        {
+			context.Database.RollbackTransaction();
+			return false;
         }
+
     }
 }

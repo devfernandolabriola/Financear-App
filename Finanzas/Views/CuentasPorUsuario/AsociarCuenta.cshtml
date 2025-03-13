@@ -33,7 +33,7 @@
 <p id="CuentaVacio" style="color: red; display:none; padding:17px;">Ningun campo debe quedar vacio</p>
     
     <div style="padding:17px;">
-<input type="button" onclick="SearchAccount()" class="btn btn-info" value="Asociar cuenta"/>
+<input type="button" id="AsociarCuentabutton" onclick="SearchAccount()" class="btn btn-info" value="Asociar cuenta"/>
     </div>
     </div>
 </div>
@@ -72,6 +72,24 @@
         });
     });
 
+    //Hacer que entre a la funcion apretando enter o clickeando, cualquiera de las dos.
+
+
+    // document.addEventListener("keypress", function (event) {
+    //     // If the user presses the "Enter" key on the keyboard
+    //     if (event.key === "Enter" ||) {
+
+    //         event.preventDefault();
+    //         // Trigger the button element with a click
+            
+            
+    //         console.log("Esto anda");
+
+    //     }
+    // });
+
+
+
     function SearchAccount() {
         let NombreCuenta = $('#Cuenta').val().trim();
         let Moneda = $('#Moneda').val().trim();
@@ -84,7 +102,7 @@
 
         formData.append("NombreCuenta", NombreCuenta);
         formData.append("Moneda", Moneda);
-		formData.append("MontoTotal", MontoTotal);
+        formData.append("MontoTotal", MontoTotal);
 
         console.log(formData);
 
@@ -92,11 +110,13 @@
             url: '@Url.Action("VincularCuenta", "CuentasPorUsuario")',
             method: "POST",
             data: formData,
-            contentType: false,  
+            contentType: false,
             processData: false,
             success: function (data) {
                 window.location.href = '@Url.Action("Index", "Home")';
             }
         });
     };
+
+
 </script>

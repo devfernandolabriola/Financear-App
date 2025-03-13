@@ -25,7 +25,7 @@ html {
 body {
     margin-bottom: 60px;
     /*    background-image: url('https://cdn.discordapp.com/attachments/1020182827964317728/1347735638102900846/New_Project.png?ex=67cce81f&is=67cb969f&hm=0de040939a2dd880d95a11b39f06a5ba2e2e333296ca4bfa3a96cdb2311cfabe&')*/
-    background: radial-gradient(#02471d, #181a1c);
+    background-color:rgb(20 20 20);
     color:white;
 }
 
@@ -86,8 +86,36 @@ body {
 footer {
     background-color: rgb(33, 28, 28);
     color:white;
+    position:fixed;
 }
 
 #Layout {
     background-color: rgb(33, 28, 28) !important;
+}
+
+#LoginButton {
+    color: #4BAB03 !important;
+}
+
+    #LoginButton:hover {
+        color: #2D6602 !important;
+    }
+
+
+#AgMovimientoItem{
+    width:100%;
+}
+#AgMovimientoItem, #DropdownCuentasAg {
+    justify-content:center;
+    text-align:center;
+    padding:10px;
+}
+#AgregarMovimiento {
+    border: solid;
+    /*    height: 300px;*/
+    width: 350px;
+    background-color: rgb(33, 28, 28);
+    box-sizing: border-box;
+    border-radius: 15px;
+    align-self:center;
 }
