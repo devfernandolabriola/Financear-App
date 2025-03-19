@@ -30,7 +30,7 @@
 				document.addEventListener("DOMContentLoaded", function() {
 					document.getElementById('chartsContainer').classList.remove('hidden-content');
 				});
-        </script>
+		</script>
 
 
 	} else {
@@ -38,11 +38,56 @@
 			<h1 class="display-4">No tienes cuentas asociadas.</h1>
             <p> Puedes Asociar una cuenta haciendo <a asp-area="" asp-controller="CuentasPorUsuario" asp-action="AsociarCuenta"> click aqui</a>.</p>
 		</div>
+
 	}
 
+
+
+
 } else {
-	<div class="text-center">
-		<h1 class="display-4">Welcome</h1>
-		<p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<div class="container-fluid">
+		<section class="WelcomeTitulo">
+		<div class="text-center">
+		<h1 class="display-4" id="Titulo">Bienvenido a Financear.</h1>
+
+				<h3 style="padding:15px;">¡Desde esta Web podras manejar tus finanzas de manera detallada y dar un seguimiento a tus gastos y entradas!</h3>
+		
+		</section>
+		<br />
+			<section>
+				<div class="text-center" id="TituloItems">
+		<h1 style="padding:20px;">¿Porque Usar Financear?</h1>
+				</div>
+			</section>
+
+
+		<section>
+		<div class="ItemWelcome">
+				<h2 class="TituloWelcomeItems"><i class="bi bi-pencil" style="color:green;"></i>  Personalización </h2>
+		<div class="imgintro" style="display:flex;">
+			<img class="imagen" src="~/Img/crop-person-holding-folder-with-statistics.jpg">
+		<div style="display:grid; place-items:center;" id="textoimg" class="text-center">
+		<p > Registra gastos de forma especifica, puedes usar de Nombre supermercado en general, o ser mas puntual como gaseosas o alfajores.</p>
+		</div>
+		</div>
+		</div> @* Cierre div Personalización *@
+
+		<div class="ItemWelcome">
+				<h2 class="TituloWelcomeItems"><i class="bi bi-laptop" style="color:green;"></i> Interfaz amigable y precisa </h2>
+			<div class="imgintro" style="display:flex;">
+
+				<img class="imagen" src="~/Img/crecimiento-mi-empresa-es-impresionante_329181-11409.jpg" />
+			<div style="display:grid; place-items:center;" id="textoimg" class="text-center">
+
+			<p> Podras ver graficos que te permiten saber la cantidad de dinero disponible en todas tus cuentas en un mismo lugar, incluso con varias monedas al mismo tiempo. </p>
+			</div>
+		</div>
+
+			</div> @* Cierre div Interfaz *@
+
+
+		</section>
 	</div>
+
 }

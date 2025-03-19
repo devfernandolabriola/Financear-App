@@ -77,52 +77,51 @@ namespace Finanzas.Controllers
                 return BadRequest("error");
             }
 
-            // Tengo que utilizar el buscarCuenta nuevamente para obtener el id de la cuenta.
-            // Tengo que crear un dropdown para que elija la moneda que tendra esa cuenta y una funcion para tomar ese id
-            //Una vez tengo esos 3 ids, creo otra funcion en cuentaporusuario que cree la cuenta por usuario y la llamo desde esta funcion.
-            //asi ya quedaria asociada la cuenta.
+        }
 
+        public ActionResult EliminarCuenta()
+        {
+            ViewBag.TieneCuentas = false;
+            bool tieneCuentas = Usuario.VerificarCuentasVinculadasUsuario(_context, int.Parse(HttpContext.Session.GetString("UsuarioId")));
+            if(tieneCuentas)
+            {
+                ViewBag.TieneCuentas = true;
+            }
+            List<Moneda> listMonedas = null;
+            using (FinanzasAppContext context  = new FinanzasAppContext()) {
+                 listMonedas = Moneda.VerMonedas();
 
+                List<SelectListItem> monedas = listMonedas.ConvertAll(c =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = c.Nombre,
+                        Value = c.Id.ToString(),
+                        Selected = false
+                    };
+                });
+                    ViewBag.Monedas = monedas;
+                    ViewBag.CU = monedas;
+                    return View();
+            }
+        }
 
+        public ActionResult BorrarCuenta([FromForm] BorrarCuentaDTO dto)
+        {
+             FinanzasAppContext context = new FinanzasAppContext();
+             var userid = HttpContext.Session.GetString("UsuarioId");
+             var CXUId = CuentasPorUsuario.BuscarCXUId(context, Convert.ToInt32(userid), Convert.ToInt32(dto.cuenta), Convert.ToInt32(dto.moneda));
 
+            var Eliminado = CuentasPorUsuario.EliminarCuentaPorUsuario(context, (int)CXUId);
 
-            //List<Cuenta> list = null;
-            //using (FinanzasAppContext context = new FinanzasAppContext())
-            //{
-            //    var cuenta = new Cuenta();
-            //    list = cuenta.VerCuentas();
-
-            //    List<SelectListItem> cuentas = list.ConvertAll(c =>
-            //    {
-            //        return new SelectListItem()
-            //        {
-            //            Text = c.Nombre,
-            //            Value = c.Id.ToString(),
-            //            Selected = false
-            //        };
-            //    });
-            //    ViewBag.Cuentas = cuentas;
-            //    return View();
-            //}
-
-        
-
-            //using (FinanzasAppContext context = new FinanzasAppContext())
-            //{
-            //    // Obtén las cuentas que coincidan con el prefix (si hay)
-            //    var cuentas = context.Cuentas
-            //                         .Where(c => c.Nombre.Contains(prefix))  // Filtra por el prefijo
-            //                         .Select(c => new { c.Id, c.Nombre })   // Solo selecciona Id y Nombre
-            //                         .ToList();
-
-            //    var jsonResponse = JsonConvert.SerializeObject(cuentas);
-
-            //    // Retornamos el JSON serializado
-            //    return Content(jsonResponse, "application/json");
-            //}
-
-
-
+            if(Eliminado)
+            {
+                return Ok(new { message = "Ok" });
+            }
+            else
+            {
+                return BadRequest("error");
+            }
         }
     }
 }

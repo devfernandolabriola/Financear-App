@@ -1,0 +1,139 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Newtonsoft.Json
+@model Finanzas.Models.CuentasPorUsuario
+@{
+    List<SelectListItem> Monedas = (List<SelectListItem>)ViewBag.Monedas;
+    List<SelectListItem> CU = (List<SelectListItem>)ViewBag.CU;
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Modal -->
+<div class="modal fade" id="EliminarCuentaModal" tabindex="-1" role="dialog" aria-labelledby="EliminarCuentaModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content  bg-black">
+            <div class="modal-header">
+                <h5 class="modal-title text text-danger" id="exampleModalLongTitle">Eliminar Cuenta</h5>
+                <button type="button" style="background-color:transparent; color:white;" class="close" id="CloseModal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3 style="justify-content:center;"> ¿Esta seguro que desea eliminar la cuenta?</h3>
+                <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                <p style="display:inline;"> Si Elimina la cuenta, tambien eliminará el historial de movimientos hechos de la misma</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="CerrarModal" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="BotonEliminar" class="btn btn-danger">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+@if(ViewBag.TieneCuentas)
+{
+<div id="EliminarCuenta">
+    <br />
+    <div id="ElCuentaItem">
+        @Html.DropDownList("monedas", Monedas, "Seleccione la moneda", new { @class = "form-control", @id = "Moneda" })
+    </div>
+
+    <div id="DropdownCuentasEl" style="display:none;">
+        @Html.DropDownList("CU", CU, "Seleccione la cuenta que quieres eliminar", new { @id = "CUDropdown", @style = "width:100%; text-align:center;" })
+    </div>
+    <div id="ElCuentaButton">
+        <input type="button" value="Eliminar" class="btn btn-danger" disabled="true" id="BotonModal"/>
+    </div>
+    </div>
+}
+else
+{
+    <div style="text-align:center;">
+    <h2>No hay cuentas asociadas</h2>
+    <br />
+    <p style="padding:20px;"> Puedes Asociar una cuenta haciendo <a asp-area="" asp-controller="CuentasPorUsuario" asp-action="AsociarCuenta"> click aqui</a>.</p>
+    </div>
+}
+
+
+
+<script>
+    $('document').ready(function () {
+
+        $('#Moneda').on('change', function () {
+
+            let Moneda = $('#Moneda').val()
+            let MonedaData = new FormData();
+
+            MonedaData.append("moneda", Moneda);
+
+            $.ajax({
+                url: '@Url.Action("BuscarCuentas", "Movimiento")',
+                method: "POST",
+                data: MonedaData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var CUDropdown = $('#CUDropdown');
+                    var datos = "";
+                    CUDropdown.empty();
+                    $.each(data, function (index, cuenta) {
+                        console.log(cuenta);
+                        datos += '<option value="' + cuenta.value + '">' + cuenta.text + '</option>';
+                    });
+                    CUDropdown.append(datos);
+                    // Bug aca, añadir validacion por si deselecciona la moneda.
+                    console.log(CUDropdown.val())
+                    if (CUDropdown.val() != null) {
+                         document.getElementById("BotonModal").disabled = false;
+                        document.getElementById("DropdownCuentasEl").style.display = "block";
+                    } else {
+                         document.getElementById("BotonModal").disabled = true;
+                        document.getElementById("DropdownCuentasEl").style.display = "none";
+                    };
+                },
+                error: function (xhr, status, error) {
+                    console.error("Hubo un error: " + error);
+                }
+            }); //Aca cierra el ajax
+
+        });
+
+        $('#BotonEliminar').on('click', function () {
+            let Moneda = $('#Moneda').val()
+            let Cuenta = $('#CUDropdown').val()
+
+                let ElData = new FormData();
+
+                ElData.append("moneda", Moneda)
+                ElData.append("cuenta", Cuenta)
+
+                $.ajax({
+                    url: '@Url.Action("BorrarCuenta", "CuentasPorUsuario")',
+                    method: 'POST',
+                    data: ElData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        window.location.href = '@Url.Action("Index", "Home")';
+                    }
+                });
+        });
+
+
+        $('#BotonModal').on('click', function () {
+            $('#EliminarCuentaModal').modal('show');
+        });
+
+        $('#CloseModal').on('click', function () {
+            $('#EliminarCuentaModal').modal('hide');
+        });
+        $('#CerrarModal').on('click', function () {
+            $('#EliminarCuentaModal').modal('hide');
+        });
+    });
+</script>

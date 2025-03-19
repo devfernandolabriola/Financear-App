@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
+using Finanzas.DTO;
 
 namespace Finanzas.Controllers
 {
@@ -183,24 +184,24 @@ namespace Finanzas.Controllers
 
         }
 
-        public ActionResult VincularMovimiento(string NombreMovimiento, string TipoAccion, string monedaId, string CuentaId, DateTime fecha, string CategoriaId, string Monto)
+        public ActionResult VincularMovimiento([FromForm] VincularMovimientoDTO dto)
         {
             FinanzasAppContext context = new FinanzasAppContext();
             var userid = HttpContext.Session.GetString("UsuarioId");
-            var CXUId = CuentasPorUsuario.BuscarCXUId(context, Convert.ToInt32(userid), Convert.ToInt32(CuentaId), Convert.ToInt32(monedaId));       
+            var CXUId = CuentasPorUsuario.BuscarCXUId(context, Convert.ToInt32(userid), Convert.ToInt32(dto.CuentaId), Convert.ToInt32(dto.monedaId));       
 
-            var Agregado = Movimiento.AgregarMovimiento(context, NombreMovimiento, Convert.ToInt32(TipoAccion), (int)CXUId, fecha, Monto, Convert.ToInt32(CategoriaId));
+            var Agregado = Movimiento.AgregarMovimiento(context, dto.NombreMovimiento, Convert.ToInt32(dto.TipoAccion), (int)CXUId, dto.fecha, dto.Monto, Convert.ToInt32(dto.CategoriaId));
 
             if (Agregado)
             {
-                var Transaccion = CuentasPorUsuario.HacerMovimiento(context, (int)CXUId, Convert.ToInt32(TipoAccion), Monto);
+                var Transaccion = CuentasPorUsuario.HacerMovimiento(context, (int)CXUId, Convert.ToInt32(dto.TipoAccion), dto.Monto);
                 if (Transaccion)
                 {
                     return Ok(new { message = "Ok" });
                 }
                 else
                 {
-                    var Eliminado = Movimiento.EliminarMovimiento(context, NombreMovimiento, Convert.ToInt32(TipoAccion), (int)CXUId, fecha, Monto, Convert.ToInt32(CategoriaId));
+                    var Eliminado = Movimiento.EliminarMovimiento(context, dto.NombreMovimiento, Convert.ToInt32(dto.TipoAccion), (int)CXUId, dto.fecha, dto.Monto, Convert.ToInt32(dto.CategoriaId));
                     return BadRequest("error");
                 }
             }
@@ -211,10 +212,10 @@ namespace Finanzas.Controllers
 
         }
 
-        public ActionResult EliminarMovimiento(int MovimientoId)
+        public ActionResult EliminarMovimiento(string MovimientoId)
         {
 			FinanzasAppContext context = new FinanzasAppContext();
-            var Eliminado = Movimiento.EliminarDeHistorial(context, MovimientoId);
+            var Eliminado = Movimiento.EliminarDeHistorial(context, Convert.ToInt32(MovimientoId));
 
             if(Eliminado)
             {

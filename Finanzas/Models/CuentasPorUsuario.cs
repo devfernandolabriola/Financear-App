@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Finanzas.Controllers;
+using System;
 
 
 namespace Finanzas.Models;
@@ -99,6 +100,23 @@ public partial class CuentasPorUsuario
                 context.Database.RollbackTransaction();
                 return false;
             }
+        }
+    }
+
+    public static bool EliminarCuentaPorUsuario(FinanzasAppContext context,int CXUId)
+    {
+        try
+        {
+            context.Database.BeginTransaction();
+            context.Database.ExecuteSqlRaw($"Delete from Movimientos WHERE IdCXU ={CXUId}");
+            context.Database.ExecuteSqlRaw($"Delete from CuentasPorUsuario WHERE id ={CXUId}");
+            context.Database.CommitTransaction();
+            return true;
+        }
+        catch (Exception)
+        {
+            context.Database.RollbackTransaction();
+            return false;
         }
     }
 }

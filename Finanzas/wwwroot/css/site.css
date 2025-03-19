@@ -58,7 +58,7 @@ body {
     padding:17px;
 }
 
-#SignUpButton, #LoginButton, #AsCuentaButton {
+#SignUpButton, #LoginButton, #AsCuentaButton, #ElCuentaButton {
     justify-content: center;
     text-align: center;
 }
@@ -69,7 +69,7 @@ body {
 }
 
 
-#Login,#Register,#AsociarCuenta {
+#Login,#Register,#AsociarCuenta,#EliminarCuenta {
     border: solid;
 /*    height: 300px;*/
     width: 350px;
@@ -105,7 +105,7 @@ footer {
 #AgMovimientoItem{
     width:100%;
 }
-#AgMovimientoItem, #DropdownCuentasAg {
+#AgMovimientoItem, #DropdownCuentasAg,#DropdownCuentasEl,#ElCuentaItem {
     justify-content:center;
     text-align:center;
     padding:10px;
@@ -119,3 +119,100 @@ footer {
     border-radius: 15px;
     align-self:center;
 }
+
+.imagen {
+    margin-right: 50px;
+    height: 400px;
+    width:300px;
+    border-radius:20px;
+}
+
+.imgintro {
+    display: flex;
+    padding: 30px;
+    border-style: inset;
+    border-radius: 20px;
+    /*    background-color: #070916;*/
+    border-color: #050506;
+    margin: 20px;
+}
+
+/*#textoimg {
+    padding: 30px;
+    border-style: ridge;
+    border-radius: 20px;
+    background-color: #070916;
+    border-color: #0c0d12;
+    justify-content:center;
+}*/
+
+#textoimg{
+    font-size:xx-large;
+}
+
+#Titulo {
+    background: linear-gradient(90deg, #01226b, #d3009c);
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
+    width: 100%;
+}
+
+
+
+.ItemWelcome {
+    padding:20px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: moveup 0.5s linear forwards;
+    filter: blur(5px);
+    animation-timeline: view();
+    animation-range: entry 0;
+}
+
+
+section {
+    padding: 60px;
+}
+
+.WelcomeTitulo {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: moveup 0.5s linear forwards;
+    filter: blur(5px);
+}
+
+.TituloWelcomeItems{
+    text-align:center;
+    padding:20px;
+}
+
+#TituloItems {
+    opacity: 0; /* Empezamos también invisible */
+    animation: fadeIn 1s ease forwards 0.5s; /* Desvanecemos el texto después de la animación */
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes moveup {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(5px); 
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0px);
+        filter:blur(0px);
+    }
+}
+
