@@ -2,7 +2,7 @@
 {
     public class UsuarioLoginDTO
     {
-        public required string Nombre { get; set; }
+        public required string Email { get; set; }
         public required string Clave { get; set; }
     }
 }

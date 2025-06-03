@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Reflection.Metadata;
+using System.Text.RegularExpressions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Finanzas.Controllers
@@ -47,27 +48,35 @@ namespace Finanzas.Controllers
         //DAO = Data access object
         public IActionResult Register([FromBody] UsuarioDTO userDTO)
         {
-            try
+            if (EmailValido(userDTO.Email))
             {
-                var resultado = Usuario.VerificarDatosRegister(_context, userDTO.Email, userDTO.Nombre);
-                if (resultado == 422 || resultado == 400)
+                try
                 {
-                    return Unauthorized("Hubo un error con los datos ingresados.");
+                    var resultado = Usuario.VerificarDatosRegister(_context, userDTO.Email, userDTO.Nombre);
+                    if (resultado == 422 || resultado == 400)
+                    {
+                        return Unauthorized("Hubo un error con los datos ingresados.");
+                    }
+                    var ClaveCifrada = HashHelper.HashPassword(userDTO.Clave);
+                    var success = Usuario.RegisterUser(_context, userDTO.Email, userDTO.Nombre, ClaveCifrada);
+                    //if (success) return View("Success"); else return View("Fail");
+                    if (success)
+                    {
+                        var datoUsuario = _context.Usuarios.First(x => x.Email == userDTO.Email);
+                        SetearContext(datoUsuario.Id, datoUsuario.Nombre);
+                        return Ok(new { message = "Ok" });
+                    };
                 }
-                var ClaveCifrada = HashHelper.HashPassword(userDTO.Clave);
-                var success = Usuario.RegisterUser(_context, userDTO.Email, userDTO.Nombre, ClaveCifrada);
-                //if (success) return View("Success"); else return View("Fail");
-                if (success)
+                catch (Exception e)
                 {
-                    var datoUsuario = _context.Usuarios.First(x => x.Email == userDTO.Email);
-                    SetearContext(datoUsuario.Id, datoUsuario.Nombre);
-                    return Ok(new { message = "Ok" });
-                };
-            } catch( Exception e)
+                    return BadRequest("Error");
+                }
+                return BadRequest("Error");
+            } else
             {
                 return BadRequest("Error");
             }
-            return BadRequest("Error");
+
         }
        
 
@@ -75,7 +84,7 @@ namespace Finanzas.Controllers
         [Route("login")]
         public IActionResult IniciarSesion([FromBody] UsuarioLoginDTO userDTO) 
         {
-            var userSearched = Usuario.LoginUser(_context, userDTO.Nombre, userDTO.Clave);
+            var userSearched = Usuario.LoginUser(_context, userDTO.Email, userDTO.Clave);
             var success = userSearched != null ? true : false; //Validacion en una linea, si user es distinto de null da true, sino false.
             if (success)
             {
@@ -91,6 +100,12 @@ namespace Finanzas.Controllers
             HttpContext.Session.SetString("UsuarioId", Id.ToString());
             HttpContext.Session.SetString("UsuarioNombre", Nombre);
 
+        }
+
+        public bool EmailValido(string email)
+        {
+            var regex = new Regex(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+            return regex.IsMatch(email);
         }
     }
 }

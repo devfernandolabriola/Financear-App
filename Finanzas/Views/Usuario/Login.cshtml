@@ -14,7 +14,7 @@
     <div class="input-group-prepend">
         <span class="input-group-text"><i class="bi bi-person"></i></span>
     </div>
-    @Html.TextBoxFor(u => u.Nombre, new { @id = "Nombre", @placeholder = "Nombre", @Class = "LoginView" })
+    @Html.TextBoxFor(u => u.Email, new { @id = "Email", @placeholder = "Email", @type="email", @Class = "LoginView" })
 </div>
 <div class="input-group" id="Tbx">
     <div class="input-group-prepend">
@@ -23,7 +23,7 @@
     @Html.PasswordFor(u => u.Clave, new { @id = "Clave", @placeholder = "Clave", @minLength = "8", @Class = "LoginView" })
 </div>
     <div id="LoginButton">
-<p id="MensajeError" style="color: red; display:none; padding:17px;" class="LoginView">Nombre de usuario o clave incorrectos.</p>
+<p id="MensajeError" style="color: red; display:none; padding:17px;" class="LoginView">Correo o clave incorrectos.</p>
 
     <div  style="padding:17px;">
         <input type="button" onclick="login()" class="btn btn-warning" name="LogInButton" id="LogInButton" value="Iniciar Sesión" />
@@ -34,13 +34,13 @@
 
 
     function login() {
-        let nombre = $('#Nombre').val();
+        let email = $('#Email').val();
         let clave = $('#Clave').val();
 
         $.ajax({
             url: '@Url.Action("IniciarSesion", "Usuario")',
             method: "POST",
-            data: JSON.stringify({ Nombre: nombre, Clave: clave }),
+            data: JSON.stringify({ Email: email, Clave: clave }),
             contentType: "application/json",
             dataType: "json",
             success: function (data) {

@@ -50,9 +50,9 @@ public partial class Usuario
         } 
     }
 
-    public static Usuario? LoginUser(FinanzasAppContext context, string username, string Clave)
+    public static Usuario? LoginUser(FinanzasAppContext context, string useremail, string Clave)
     {
-        var usuario = context.Usuarios.FirstOrDefault(x => x.Nombre == username);
+        var usuario = context.Usuarios.FirstOrDefault(x => x.Email == useremail);
         if (usuario != null)
         {
             if (HashHelper.HashPassword(Clave) == usuario.Clave)
@@ -74,7 +74,7 @@ public partial class Usuario
         {
             return 400;
         }
-        var usuario = context.Usuarios.FirstOrDefault(x => x.Email == Email || x.Nombre == nombre);
+        var usuario = context.Usuarios.FirstOrDefault(x => x.Email == Email);
         if (usuario != null)
         {
             return 422;

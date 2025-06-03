@@ -5,8 +5,9 @@
     <div class="input-group-prepend">
         <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
     </div>
-    @Html.TextBoxFor(u => u.Email, new { @id = "Email", @placeholder = "Email", @Class = "TextSign" })
-</div>
+         @Html.TextBoxFor(u => u.Email, new { @id = "Email", @placeholder = "Email", type = "email", @Class = "TextSign", @TextMode = "Email" }) 
+@*         @Html.TextBox("Email", Model.Email, new { @type = "email", @class = "TextSign", @id = "Email", @placeholder = "Email" }) *@
+    </div>
 <div class="input-group" id="Tbx">
     <div class="input-group-prepend">
         <span class="input-group-text"><i class="bi bi-person"></i></span>
@@ -27,8 +28,8 @@
         </div>
 </div>
 </div>
-<script>
-
+<script type="text/javascript">
+    document.getElementById("Email").type = "email";
 
     function register() {
         let email = $('#Email').val();
@@ -45,11 +46,11 @@
             return;
         }
 
-        if(emailLimpio == "" || nombreLimpio == "" || claveLimpio == ""){
+        if (emailLimpio == "" || nombreLimpio == "" || claveLimpio == "") {
             document.getElementById("MensajeError").innerText = "Todos los campos deben tener un valor"
             document.getElementById("MensajeError").style.display = "inline";
-			return;
-		}
+            return;
+        }
 
         $.ajax({
             url: '@Url.Action("Register", "Usuario")',
@@ -62,9 +63,11 @@
                 window.location.href = '@Url.Action("Index", "Home")';
             },
             error: function (xhr,s,p) {
-                document.getElementById("MensajeError").innerText = "El nombre o el correo ya existen"
+                document.getElementById("MensajeError").innerText = "El correo ya existe o es invalido"
                 document.getElementById("MensajeError").style.display = "inline"
             }
         });
     };
+
+
 </script>
