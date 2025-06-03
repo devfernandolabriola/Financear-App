@@ -1,1 +1,1 @@
-# App para finanzas nearsito divino
+# App para finanzas 
